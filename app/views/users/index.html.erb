@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Usuarios</h1>
+
+<div id="users">
+  <% @users.each do |user| %>
+    <%= render user %>
+    <p>
+      <%= link_to "modificar", edit_user_path(user) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "Nuevo usuario", new_user_path, :class => "btn btn-primary" %>

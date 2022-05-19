@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <title>MestizApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+ <body class="d-flex flex-column h-100">
+      <main class="flex-shrink-0">
+            <header>
+            <div class="px-3 py-2 bg-dark text-white">
+              <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                  <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                    <h1>Mestiza-pp</h1>
+                  </a>
+
+                  <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                  <li>
+                      <%= link_to content_tag(:i, "Productos", :class => "bi bi-file-check"), products_path, :class => 'nav-link text-white'  %>
+                  </li>
+                  <li>
+                      <%= link_to content_tag(:i, "Mesas", :class => "bi bi-grid-1x2-fill"), products_path, :class => 'nav-link text-white'  %>
+                  </li>
+                  <li>
+                      <%= link_to content_tag(:i, "Pedidos", :class => "bi bi-calculator-fill"), products_path, :class => 'nav-link text-white'  %>
+                  </li>
+                  <li>
+                      <%= link_to content_tag(:i, "Clientes", :class => "bi bi-people-fill"), products_path, :class => 'nav-link text-white'  %>
+                  </li>
+                  <li>
+                      <%= link_to content_tag(:i, "Usuarios", :class => "bi bi-people"), users_path, :class => 'nav-link text-white'  %>
+                  </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="px-3 py-2 border-bottom mb-3">
+              <div class="container d-flex flex-wrap justify-content-center">
+                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
+                  <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <div class="text-end">
+                  <% if current_user %>
+                            <b><%= current_user.email -%></b>
+                            <%= link_to "Salir", log_out_path, :class =>"btn btn-warning text-dark me-2"  %>
+                  <% else %>
+                            <%= link_to "Iniciar", log_in_path, :class =>"btn btn-primary" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="container">
+                <% if notice %>
+                  <p class="alert alert-info"><%= notice %></p>
+                <% end %>
+                <% if alert %>
+                  <p class="alert alert-warning"><%= alert %></p>
+                <% end %>
+                <%= yield %>
+          </div>
+      </main>
+      <footer class="footer mt-auto py-3 bg-light">
+          <div class="container">
+            <span class="text-muted">Cocina de Origen.</span>
+          </div>
+      </footer>
+  </body>
+</html>

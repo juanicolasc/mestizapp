@@ -1,0 +1,12 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>usuario:</strong>
+    <%= user.email %>
+  </p>
+
+  <p>
+    <strong>Perfil:</strong>
+    <%= user.admin? ? "Administrador" : "Mesero" %>
+  </p>
+
+</div>

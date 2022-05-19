@@ -1,0 +1,32 @@
+<h1>Sign Up</h1>
+
+<%= form_for @user do |form| %>
+  <% if @user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+  <p>
+    <%= form.label :password %><br />
+    <%= form.password_field :password %>
+  </p>
+  <p>
+    <%= form.label :password_confirmation %><br />
+    <%= form.password_field :password_confirmation %>
+  </p>
+  <div>
+    <%= form.label :profile, style: "display: block" %>
+    <%= form.select :profile, options_for_select([['Administrador', User::ADMIN], ['Mesero', User::WAITER]], User::ADMIN) %>
+  </div>
+  <p class="button"><%= form.submit %></p>
+<% end %>
