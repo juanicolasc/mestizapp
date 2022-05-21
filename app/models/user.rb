@@ -2,7 +2,7 @@ class User < ApplicationRecord
   ADMIN = 1
   WAITER = 2
 
-
+  has_many :orders
   attr_accessor :password
   before_save :encrypt_password
 
@@ -30,5 +30,9 @@ class User < ApplicationRecord
 
   def admin?
      self.profile == (User::ADMIN)
+  end
+
+  def to_s
+      self.email
   end
 end

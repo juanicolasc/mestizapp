@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @table %>
+
+<div>
+  <%= link_to "Edit this table", edit_table_path(@table) %> |
+  <%= link_to "Back to tables", tables_path %>
+
+  <%= button_to "Destroy this table", @table, method: :delete %>
+</div>

@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2022-05-19
+  observations: MyText
+  total_value: 1
+  tax: 1
+  tip: 1
+  guests: 1
+  active: false
+  user: one
+  customer: one
+  table: one
+
+two:
+  date: 2022-05-19
+  observations: MyText
+  total_value: 1
+  tax: 1
+  tip: 1
+  guests: 1
+  active: false
+  user: two
+  customer: two
+  table: two
