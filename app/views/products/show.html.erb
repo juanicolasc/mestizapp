@@ -1,10 +1,36 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @product %>
+<div class="px-3 py-2 border-bottom mb-3">
+  <div class="container d-flex flex-wrap justify-content-center">
+    <a href="<%= products_path -%>" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <span class="fs-4 bolder">Productos</span>
+    </a>
 
-<div>
-  <%= link_to "Edit this product", edit_product_path(@product) %> |
-  <%= link_to "Back to products", products_path %>
+  </div>
+</div>
+<div class="row" id="<%= dom_id @product %>">
+    <div class="col-md-6">
+          <div class="col">
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title><%= @product.name %></title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg>
 
-  <%= button_to "Destroy this product", @product, method: :delete %>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= @product.name %></h5>
+                    <p class="card-text"><%= @product.description %></p>
+                    <p class="card-text">Precio: <small class="text-muted"><%= number_to_currency @product.price,  :precision => 0 %></small></p>
+                    <p class="card-text">Disponible: <small class="text-muted"><%= @product.stock %></small></p>
+                    <div>
+                        <%= link_to content_tag(:i, " ", :class => "bi bi-collection"), products_path, :class => "btn btn-primary" %>
+                        <%= link_to content_tag(:i, " ", :class => "bi bi-pencil"), edit_product_path(@product), :class => "btn btn-warning " %>
+                        <%= link_to content_tag(:i, " ", :class => "bi bi-trash-fill"), @product, method: :delete, :class => "btn btn-danger" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
 </div>

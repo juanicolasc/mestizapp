@@ -1,27 +1,7 @@
-<div id="<%= dom_id product %>">
-  <p>
-    <strong>Name:</strong>
-    <%= product.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </p>
-
-  <p>
-    <strong>Stock:</strong>
-    <%= product.stock %>
-  </p>
-
-  <p>
-    <strong>Active:</strong>
-    <%= product.active %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= product.price %>
-  </p>
-
-</div>
+<tr id="<%= dom_id product %>">
+  <th scope="row"><%= product.name %></th>
+  <td><%= product.description %></td>
+  <td><%= product.stock %></td>
+  <td><%= product.price %></td>
+  <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), product, :class => "btn btn-success" %></td>
+</tr>

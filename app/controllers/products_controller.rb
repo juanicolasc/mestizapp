@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Product.all
+    @products = Product.where(:active => true)
   end
 
   # GET /products/1 or /products/1.json
@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
   # POST /products or /products.json
   def create
     @product = Product.new(product_params)
+    @order.active = true
 
     respond_to do |format|
       if @product.save
@@ -55,7 +56,7 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.destroy
+    @product.update(:active => false)
 
     respond_to do |format|
       format.html { redirect_to products_url, notice: "Product was successfully destroyed." }

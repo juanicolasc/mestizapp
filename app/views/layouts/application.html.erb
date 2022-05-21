@@ -25,34 +25,18 @@
                       <%= link_to content_tag(:i, "Productos", :class => "bi bi-file-check"), products_path, :class => 'nav-link text-white'  %>
                   </li>
                   <li>
-                      <%= link_to content_tag(:i, "Mesas", :class => "bi bi-grid-1x2-fill"), products_path, :class => 'nav-link text-white'  %>
+                      <%= link_to content_tag(:i, "Mesas", :class => "bi bi-grid-1x2-fill"), tables_path, :class => 'nav-link text-white'  %>
                   </li>
                   <li>
-                      <%= link_to content_tag(:i, "Pedidos", :class => "bi bi-calculator-fill"), products_path, :class => 'nav-link text-white'  %>
+                      <%= link_to content_tag(:i, "Pedidos", :class => "bi bi-calculator-fill"), orders_path, :class => 'nav-link text-white'  %>
                   </li>
                   <li>
-                      <%= link_to content_tag(:i, "Clientes", :class => "bi bi-people-fill"), products_path, :class => 'nav-link text-white'  %>
+                      <%= link_to content_tag(:i, "Clientes", :class => "bi bi-people-fill"), customers_path, :class => 'nav-link text-white'  %>
                   </li>
                   <li>
                       <%= link_to content_tag(:i, "Usuarios", :class => "bi bi-people"), users_path, :class => 'nav-link text-white'  %>
                   </li>
                   </ul>
-                </div>
-              </div>
-            </div>
-            <div class="px-3 py-2 border-bottom mb-3">
-              <div class="container d-flex flex-wrap justify-content-center">
-                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-                  <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                </form>
-
-                <div class="text-end">
-                  <% if current_user %>
-                            <b><%= current_user.email -%></b>
-                            <%= link_to "Salir", log_out_path, :class =>"btn btn-warning text-dark me-2"  %>
-                  <% else %>
-                            <%= link_to "Iniciar", log_in_path, :class =>"btn btn-primary" %>
-                  <% end %>
                 </div>
               </div>
             </div>
@@ -69,7 +53,14 @@
       </main>
       <footer class="footer mt-auto py-3 bg-light">
           <div class="container">
-            <span class="text-muted">Cocina de Origen.</span>
+            <div class="text-end">
+              <% if current_user %>
+                        <b><%= current_user.email -%></b>
+                        <%= link_to "Salir", log_out_path, :class =>"btn btn-warning text-dark me-2"  %>
+              <% else %>
+                        <%= link_to "Iniciar", log_in_path, :class =>"btn btn-primary" %>
+              <% end %>
+            </div>
           </div>
       </footer>
   </body>
