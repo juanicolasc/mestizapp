@@ -3,5 +3,5 @@
   <td><%= product.description %></td>
   <td><%= product.stock %></td>
   <td><%= product.price %></td>
-  <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), product, :class => "btn btn-success" %></td>
+  <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), product, :class => "btn btn-success", :title => "Ver en Detalle", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %></td>
 </tr>
