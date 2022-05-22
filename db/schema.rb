@@ -41,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_21_164351) do
     t.integer "guests"
     t.boolean "active"
     t.integer "user_id", null: false
-    t.integer "customer_id", null: false
+    t.integer "customer_id"
     t.integer "table_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :orders
+  root "sessions#new"
+  resources :orders do
+      resources :items
+  end
   resources :customers
   resources :tables
   get 'sessions/new'
@@ -9,7 +12,6 @@ Rails.application.routes.draw do
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"
   get "sign_up" => "users#new", :as => "sign_up"
-  root "sessions#new"
   resources :users
   resources :sessions
 

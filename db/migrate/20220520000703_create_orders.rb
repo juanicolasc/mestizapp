@@ -9,7 +9,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.integer :guests
       t.boolean :active
       t.references :user, null: false, foreign_key: true
-      t.references :customer, null: false, foreign_key: true
+      t.references :customer, null: true, foreign_key: true
       t.references :table, null: false, foreign_key: true
 
       t.timestamps

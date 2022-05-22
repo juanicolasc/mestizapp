@@ -1,77 +1,51 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @order %>
-<table class="table caption-top table-responsive">
-  <caption>Agregar Items</caption>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
 <div class="row">
-    <div class="col-md-6">
-          <div class="col">
-            <div class="card">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg>
-
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-    </div>
-    <div class="col-md-6">
-          <div class="col">
-            <div class="card">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg>
-
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="col-md-12">
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Observaciones</th>
+              <th scope="col">Precio U.</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody  id="items">
+          <% @order.items.each do |item| %>
+            <%= render "item", item: item %>
+          <% end %>
+          </tbody>
+        </table>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Agregar items:</h2>
+        <%= form_with model: [ @order, @order.items.build ] do |form| %>
+
+          <div>
+            <%= form.label :product_id, style: "display: block" %>
+            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name) %>
+          </div>
+          <p>
+            <%= form.label :quantity %><br>
+            <%= form.number_field :quantity %>
+          </p>
+          <p>
+            <%= form.label :observations %><br>
+            <%= form.text_area :observations %>
+          </p>
+          <p>
+            <%= form.submit %>
+          </p>
+        <% end %>
+
+    </div>
+</div>
+
 <div>
   <%= link_to "Edit this order", edit_order_path(@order) %> |
   <%= link_to "Back to orders", orders_path %>
@@ -79,3 +53,5 @@
   <%= button_to "Destroy this order", @order, method: :delete %>
 
 </div>
+
+
