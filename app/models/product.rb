@@ -1,2 +1,6 @@
 class Product < ApplicationRecord
+  validates :name, uniqueness: { scope: :active, if: :active?, message: "Ya hay otro producto activo con este nombre" }, presence: true
+  validates_presence_of :description
+  validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :stock, numericality: { only_integer: true, greater_than_or_equal_to: 0  }
 end
