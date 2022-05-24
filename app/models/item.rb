@@ -11,4 +11,15 @@ class Item < ApplicationRecord
       self.price_unit = self.product.price
       self.total = self.price_unit * self.quantity
   end
+
+  after_create do
+      self.order.total_value ||= 0
+      self.order.total_value += self.total
+      self.order.save
+  end
+
+  after_destroy do
+      self.order.total_value -= self.total
+      self.order.save
+  end
 end

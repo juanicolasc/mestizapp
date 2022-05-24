@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
   # GET /orders/1 or /orders/1.json
   def show
     @products = Product.where(:active => true)
+    @items = @order.items
   end
 
   # GET /orders/new
@@ -62,7 +63,7 @@ class OrdersController < ApplicationController
     @order.update(:active => false)
 
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
+      format.html { redirect_to order_url(@order), notice: "Se eliminó la orden." }
       format.json { head :no_content }
     end
   end

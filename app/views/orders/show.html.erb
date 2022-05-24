@@ -1,6 +1,6 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @order %>
+
+<%= link_to "nuevo item", new_order_item_path(@order), class: "btn btn--primary" %>
 <div class="row">
     <div class="col-md-12">
         <table class="table table-responsive">
@@ -14,35 +14,9 @@
             </tr>
           </thead>
           <tbody  id="items">
-          <% @order.items.each do |item| %>
-            <%= render "item", item: item %>
-          <% end %>
+            <%= render @items, order: @order %>
           </tbody>
         </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <h2>Agregar items:</h2>
-        <%= form_with model: [ @order, @order.items.build ] do |form| %>
-
-          <div>
-            <%= form.label :product_id, style: "display: block" %>
-            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name) %>
-          </div>
-          <p>
-            <%= form.label :quantity %><br>
-            <%= form.number_field :quantity %>
-          </p>
-          <p>
-            <%= form.label :observations %><br>
-            <%= form.text_area :observations %>
-          </p>
-          <p>
-            <%= form.submit %>
-          </p>
-        <% end %>
-
     </div>
 </div>
 

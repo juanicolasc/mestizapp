@@ -1,63 +1,63 @@
-<%= form_with(model: order) do |form| %>
-  <% if order.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-        <% order.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="container">
+    <%= form_with(model: order) do |form| %>
+  <div class="row justify-content-md-center">
+    <div class="col">
+      <% if order.errors.any? %>
+        <div style="color: red">
+          <h4><%= pluralize(order.errors.count, "error") %> Revisa los siguientes errores:</h4>
+          <ul>
+            <% order.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
   </div>
+  <div class="row justify-content-md-center">
+      <div class="col-sm-12 col-md-6">
+        <%= form.label :date, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+        <%= form.date_field :date, class: "form-control form-control-lg" %>
+          </div>
+      </div>
 
-  <div>
-    <%= form.label :table_id, style: "display: block" %>
-    <%= form.select :table_id, options_from_collection_for_select(Table.all, :id, :name) %>
+      <div class="col-sm-12 col-md-6">
+        <%= form.label :table_id, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+        <%= form.select :table_id, options_from_collection_for_select(Table.all, :id, :name) , {},{"class" => "form-select form-select-lg mb-3", 'aria-label:' => ".form-select-lg example"} %>
+          </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <%= form.label :customer_id, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+        <%= form.select :customer_id, options_from_collection_for_select(Customer.all.order(:name), :id, :to_s), {:include_blank => true} , class: "form-control form-control-lg" %>
+          </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <%= form.label :guests, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+        <%= form.number_field :guests , class: "form-control form-control-lg" %>
+          </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 ">
+        <%= form.label :observations, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+        <%= form.text_area :observations , class: "form-control form-control-lg" %>
+          </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <%= form.label :user_id, "Creado por:", class: "col-sm-4 col-form-label" %>
+        <div class="col-sm-8">
+            <b ><%= current_user.email -%></b><br>
+            <%= form.submit "Guardar", :class => "btn btn-primary" %>
+            <%= link_to "Cancelar", orders_path, :class => "btn btn-danger" %>
+        </div>
+      </div>
   </div>
-
-  <div>
-    <%= form.label :customer_id, style: "display: block" %>
-    <%= form.select :customer_id, options_from_collection_for_select(Customer.all, :id, :to_s), {:include_blank => true} %>
-  </div>
-
-  <div>
-    <%= form.label :guests, style: "display: block" %>
-    <%= form.number_field :guests %>
-  </div>
-
-  <div>
-    <%= form.label :observations, style: "display: block" %>
-    <%= form.text_area :observations %>
-  </div>
-
-  <div>
-    <%= form.label :total_value, style: "display: block" %>
-    <%= form.number_field :total_value %>
-  </div>
-
-  <div>
-    <%= form.label :tax, style: "display: block" %>
-    <%= form.number_field :tax %>
-  </div>
-
-  <div>
-    <%= form.label :tip, style: "display: block" %>
-    <%= form.number_field :tip %>
-  </div>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <b><%= current_user.email -%></b>
-  </div>
-
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <% end %>
+</div>

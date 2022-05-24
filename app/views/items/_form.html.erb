@@ -1,0 +1,21 @@
+        <%= form_for [order, item] do |form| %>
+          <% if item.errors.any? %>
+              <%= content_tag(:div, item.errors.full_messages.to_sentence.capitalize, :class => "alert alert-danger") %>
+          <% end %>
+          <div>
+            <%= form.label :product_id, style: "display: block" %>
+            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name) %>
+          </div>
+          <p>
+            <%= form.label :quantity %><br>
+            <%= form.number_field :quantity %>
+          </p>
+          <p>
+            <%= form.label :observations %><br>
+            <%= form.text_area :observations %>
+          </p>
+          <p>
+            <%= form.submit "Guardar", :class => "btn btn-primary" %>
+            <%= link_to "cancelar", order_path(order), :class => "btn btn-secondary" %>
+          </p>
+        <% end %>

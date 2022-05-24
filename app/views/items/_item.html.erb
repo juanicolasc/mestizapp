@@ -1,0 +1,10 @@
+<tr >
+  <th scope="row"><%= item.product ? item.product.name : '' %></th>
+  <td><%= item.quantity %></td>
+  <td><%= item.observations %></td>
+  <td><%= item.price_unit %></td>
+  <td><%= item.total %></td>
+  <td><%= link_to content_tag(:i, " ", :class => "bi bi-pencil"), edit_order_item_path(item.order,item), :class => "btn btn-warning ", :title => "Modificar", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %>
+        <%= link_to content_tag(:i, " ", :class => "bi bi-trash-fill"), order_item_path(item.order,item), :class => "btn btn-danger", data: { 'turbo-method' => :delete, :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, :title => "Anular" %>
+    </td>
+</tr>

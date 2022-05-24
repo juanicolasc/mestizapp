@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "sessions#new"
   resources :orders do
-      resources :items
+      resources :items, except: [:index, :show]
   end
   resources :customers
   resources :tables
