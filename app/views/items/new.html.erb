@@ -4,5 +4,7 @@
     <h4>Nuevo Item</h4>
   </div>
 
-  <%= render "form", order: @order, item: @item %>
+  <%= turbo_frame_tag @item do %>
+    <%= render "form", order: @order, item: @item %>
+  <% end %>
 </main>

@@ -11,21 +11,10 @@
 
   <p>
     <strong>Total value:</strong>
-    <%= order.total_value %>
+    <%= content_tag :span, number_to_currency(order.total_value,  :precision => 0), :id => "total_value" %>
   </p>
-
   <p>
-    <strong>Tax:</strong>
-    <%= order.tax %>
-  </p>
-
-  <p>
-    <strong>Tip:</strong>
-    <%= order.tip %>
-  </p>
-
-  <p>
-    <strong>Guests:</strong>
+    <strong>Comensales:</strong>
     <%= order.guests %>
   </p>
 

@@ -1,6 +1,9 @@
 <%= render @order %>
 
-<%= link_to "nuevo item", new_order_item_path(@order), class: "btn btn--primary" %>
+
+
+<%= turbo_frame_tag Item.new %>
+
 <div class="row">
     <div class="col-md-12">
         <table class="table table-responsive">
@@ -11,9 +14,10 @@
               <th scope="col">Observaciones</th>
               <th scope="col">Precio U.</th>
               <th scope="col">Total</th>
+              <th><%= link_to "nuevo item", new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %></th>
             </tr>
           </thead>
-          <tbody  id="items">
+          <tbody id="items">
             <%= render @items, order: @order %>
           </tbody>
         </table>

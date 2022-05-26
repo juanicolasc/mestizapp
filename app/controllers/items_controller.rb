@@ -10,7 +10,10 @@ class ItemsController < ApplicationController
     @item = @order.items.build(item_params)
 
     if @item.save
-      redirect_to order_path(@order), notice: "Item creado satisfactoriamente."
+      respond_to do |format|
+        format.html { redirect_to order_path(@order), notice: "Item creado satisfactoriamente." }
+        format.turbo_stream { flash.now[:notice] = "Item creado satisfactoriamente." }
+      end
     else
       render :new, status: :unprocessable_entity
     end

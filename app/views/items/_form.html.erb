@@ -1,21 +1,24 @@
         <%= form_for [order, item] do |form| %>
-          <% if item.errors.any? %>
-              <%= content_tag(:div, item.errors.full_messages.to_sentence.capitalize, :class => "alert alert-danger") %>
-          <% end %>
-          <div>
-            <%= form.label :product_id, style: "display: block" %>
-            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name) %>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <%= form.label :product_id %>
+            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name), {}, {class: "form-select form-select"} %>
           </div>
-          <p>
-            <%= form.label :quantity %><br>
-            <%= form.number_field :quantity %>
-          </p>
-          <p>
-            <%= form.label :observations %><br>
-            <%= form.text_area :observations %>
-          </p>
-          <p>
-            <%= form.submit "Guardar", :class => "btn btn-primary" %>
-            <%= link_to "cancelar", order_path(order), :class => "btn btn-secondary" %>
-          </p>
+          <div class="col-md-6">
+            <%= form.label :quantity, 'Cantidad' %>
+            <%= form.number_field :quantity, class: "form-control form-control" %>
+          </div>
+          <div class="col-md-6">
+            <%= form.label :observations %>
+            <%= form.text_field :observations, class: "form-control form-control" %>
+          </div>
+          <div class="col-md-6">
+            <%= form.submit "Guardar", :class => "btn btn-primary mt-4" %>
+            <%= link_to "Cancelar", order_path(order), :class => "btn btn-secondary mt-4" %>
+          </div>
+        </div>
+          <% if item.errors.any? %>
+                <%= label_tag " ", " " -%>
+              <%= content_tag(:div, item.errors.full_messages.to_sentence.capitalize, :class => "row alert alert-danger") %>
+          <% end %>
         <% end %>
