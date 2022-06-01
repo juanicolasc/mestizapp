@@ -7,19 +7,17 @@ class Item < ApplicationRecord
   validates_presence_of :order
 
   #debería agregar quien fue el mesero que agrgó el item
-  before_create do
+  before_save do
       self.price_unit = self.product.price
       self.total = self.price_unit * self.quantity
-  end
-
-  after_create do
-      self.order.total_value ||= 0
-      self.order.total_value += self.total
-      self.order.save
   end
 
   after_destroy do
       self.order.total_value -= self.total
       self.order.save
+  end
+
+  after_save do
+      self.order.update_total
   end
 end

@@ -2,7 +2,7 @@
         <div class="row g-3">
           <div class="col-md-6">
             <%= form.label :product_id %>
-            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name), {}, {class: "form-select form-select"} %>
+            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name, item.product_id), {}, {class: "form-select"} %>
           </div>
           <div class="col-md-6">
             <%= form.label :quantity, 'Cantidad' %>

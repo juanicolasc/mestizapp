@@ -4,24 +4,18 @@
 
 <%= turbo_frame_tag Item.new %>
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-responsive">
-          <thead>
-            <tr>
-              <th scope="col">Producto</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Observaciones</th>
-              <th scope="col">Precio U.</th>
-              <th scope="col">Total</th>
-              <th><%= link_to "nuevo item", new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %></th>
-            </tr>
-          </thead>
-          <tbody id="items">
-            <%= render @items, order: @order %>
-          </tbody>
-        </table>
-    </div>
+<div class="container">
+  <div class="row bg-light border-bottom border-3 fw-bolder text-nowrap align-items-center">
+      <div class="col-3">Producto</div>
+      <div class="col-2">Cantidad</div>
+      <div class="col-2 d-none d-md-block overflow-hidden">Observaciones</div>
+      <div class="col">Precio U.</div>
+      <div class="col">Total</div>
+      <div class="col"><%= link_to "Agregar", new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %></div>
+  </div>
+  <%= turbo_frame_tag "items", class: "align-items-bottom"  do %>
+    <%= render @items, order: @order %>
+  <% end %>
 </div>
 
 <div>

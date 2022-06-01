@@ -24,7 +24,10 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      redirect_to order_path(@order), notice: "Item actualizado."
+      respond_to do |format|
+          format.html { redirect_to order_path(@order), notice: "Item actualizado." }
+          format.turbo_stream { flash.now[:notice] = "Item actualizado." }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,8 +38,8 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to orders_url, alert: "Item eliminado." }
-      format.json { head :no_content }
+      format.html { redirect_to orders_url, notice: "Item eliminado." }
+      format.turbo_stream { flash.now[:notice] = "Item eliminado..." }
     end
   end
 

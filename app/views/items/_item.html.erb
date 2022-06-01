@@ -1,10 +1,13 @@
-<%= content_tag :tr, id: dom_id(item) do %>
-  <th scope="row"><%= item.product ? item.product.name : '' %></th>
-  <td><%= item.quantity %></td>
-  <td><%= item.observations %></td>
-  <td><%= number_to_currency item.price_unit,  :precision => 0 %></td>
-  <td><%= number_to_currency item.total,  :precision => 0 %></td>
-  <td><%= link_to content_tag(:i, " ", :class => "bi bi-pencil"), edit_order_item_path(item.order,item), :class => "btn btn-warning ", :title => "Modificar", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %>
-        <%= link_to content_tag(:i, " ", :class => "bi bi-trash-fill"), order_item_path(item.order,item), :class => "btn btn-danger", data: { 'turbo-method' => :delete, :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, :title => "Anular" %>
-    </td>
+<%= turbo_frame_tag item, class: "row border-bottom align-items-end" do %>
+  <div class="col-3 order-md-0 lead"><%= item.product ? item.product.name : '' %></div>
+  <div class="col-2 order-md-1"><%= item.quantity %></div>
+  <div class="col-12 col-md-2 order-last order-md-2"><%= content_tag "small", item.observations %></div>
+  <div class="col order-md-3"><%= number_to_currency item.price_unit,  :precision => 0 %></div>
+  <div class="col order-md-4"><%= number_to_currency item.total,  :precision => 0 %></div>
+  <div class="col order-md-5">
+      <span class="btn-group" role="group">
+      <%= link_to content_tag(:i, " ", :class => "bi bi-pencil"), edit_order_item_path(item.order,item), :class => "btn btn-warning ", :title => "Modificar", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %>
+      <%= link_to content_tag(:i, " ", :class => "bi bi-trash-fill"), order_item_path(item.order,item), :class => "btn btn-danger", data: { 'turbo-method' => :delete, :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, :title => "Anular" %>
+      </span>
+  </div>
 <% end %>
