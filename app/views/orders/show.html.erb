@@ -1,5 +1,4 @@
 <h1>Pedido No: <%= @order.id %></h1>
-<%= turbo_frame_tag Item.new %>
 <div class="container mb-4 mt-5">
     <div class="row" id="<%= dom_id @order %>">
       <div class="col text-center">
@@ -25,6 +24,7 @@
     </div>
 </div>
 <div class="container">
+    <%= turbo_frame_tag Item.new, class: "row bg-dark bg-opacity-10" %>
   <div class="row bg-light border-bottom border-3 fw-bolder text-nowrap align-items-center">
       <div class="col-3">Producto</div>
       <div class="col-1 overflow-hidden">Cantidad</div>
