@@ -1,25 +1,73 @@
-<%= render @order %>
-
-
-
+<h1>Pedido No: <%= @order.id %></h1>
 <%= turbo_frame_tag Item.new %>
-
+<div class="container mb-4 mt-5">
+    <div class="row" id="<%= dom_id @order %>">
+      <div class="col text-center">
+        <h2><%=  content_tag(:i, " ", :class => "bi bi-calendar3") %></h2>
+        <h3 class="lead">Fecha:</h3>
+        <%= @order.date %>
+      </div>
+      <div class="col text-center">
+        <h2><%=  content_tag(:i, " ", :class => "bi bi-people-fill") %></h2>
+        <h3 class="lead">Comensales:</h3>
+        <%= @order.guests %>
+      </div>
+      <div class="col text-center">
+        <h2><%=  content_tag(:i, " ", :class => "bi bi-person-square") %></h2>
+        <h3 class="lead">Cliente:</h3>
+        <%= @order.customer %>
+      </div>
+      <div class="col text-center">
+        <h2><%=  content_tag(:i, " ", :class => "bi bi-ui-checks-grid") %></h2>
+        <h3 class="lead">Mesa:</h3>
+        <%= @order.table_id %>
+      </div>
+    </div>
+</div>
 <div class="container">
   <div class="row bg-light border-bottom border-3 fw-bolder text-nowrap align-items-center">
       <div class="col-3">Producto</div>
-      <div class="col-2">Cantidad</div>
+      <div class="col-1 overflow-hidden">Cantidad</div>
       <div class="col-2 d-none d-md-block overflow-hidden">Observaciones</div>
-      <div class="col">Precio U.</div>
-      <div class="col">Total</div>
-      <div class="col"><%= link_to "Agregar", new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %></div>
+      <div class="col-2 overflow-hidden">Precio U.</div>
+      <div class="col text-center">Total</div>
+      <div class="col text-end">
+        <%= link_to content_tag(:i, " ", :class => "bi bi-plus-circle d-block d-sm-none")+content_tag(:span, "Agregar", :class => "d-none d-sm-block"), new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %>
+      </div>
   </div>
   <%= turbo_frame_tag "items", class: "align-items-bottom"  do %>
     <%= render @items, order: @order %>
   <% end %>
+  <div class="row bg-light border-top border-3 fw-bolder text-nowrap align-items-center">
+      <div class="col-3"></div>
+      <div class="col-1"></div>
+      <div class="col-2 d-none d-md-block"></div>
+      <div class="col-2"></div>
+      <div class="col text-end mb-4"><strong><%= content_tag :span, number_to_currency(@order.total_value,  :precision => 0), :id => "total_value" %></strong></div>
+      <div class="col"></div>
+  </div>
 </div>
-
-<div>
-  <%= link_to "Edit this order", edit_order_path(@order) %> |
+<hr>
+<div class="container">
+  <div class="row">
+    <% frame_id = dom_id(@order, "observations_turbo_frame") %>
+    <%= form_with(model: @order, class: "col", data: { turbo_frame: frame_id}) do %>
+        <%= turbo_frame_tag frame_id do %>
+            <strong><%= link_to "Observaciones", edit_order_path(@order), class: "text-dark" %>:</strong>
+            <%= @order.observations %>
+        <% end %>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col">
+        <strong>Atendido por:</strong>
+        <%= @order.user %>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="container">
+  <%= link_to "Edit this order", edit_order_path(@order) %> ¬
   <%= link_to "Back to orders", orders_path %>
 
   <%= button_to "Destroy this order", @order, method: :delete %>

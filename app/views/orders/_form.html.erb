@@ -43,12 +43,18 @@
           </div>
       </div>
 
+<% frame_id = dom_id(order, "observations_turbo_frame") %>
+<%= turbo_frame_tag frame_id do %>
       <div class="col-sm-12 col-md-6 ">
         <%= form.label :observations, class: "col-sm-2 col-form-label" %>
-          <div class="col-sm-10">
-        <%= form.text_area :observations , class: "form-control form-control-lg" %>
-          </div>
+        <div class="col-md-6">
+          <%= form.text_area :observations , class: "form-control form-control-lg" %>
+        </div>
+        <%= form.button "Guardar" %>
+
+        <%= link_to "Cancelar", @order %>
       </div>
+<% end %>
 
       <div class="col-sm-12 col-md-6">
         <%= form.label :user_id, "Creado por:", class: "col-sm-4 col-form-label" %>

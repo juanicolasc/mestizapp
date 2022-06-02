@@ -1,36 +1,36 @@
-<div id="<%= dom_id order %>">
-  <p>
+<div class="row" id="<%= dom_id order %>">
+  <div class="col">
     <strong>Date:</strong>
     <%= order.date %>
-  </p>
-
-  <p>
-    <strong>Observations:</strong>
-    <%= order.observations %>
-  </p>
-
-  <p>
+  </div>
+<% frame_id = dom_id(order, "observations_turbo_frame") %>
+<%= form_with(model: order, class: "col", data: { turbo_frame: frame_id}) do %>
+    <%= turbo_frame_tag frame_id do %>
+      <div class="col">
+        <strong>Observaciones:</strong>
+        <%= order.observations %>
+      </div>
+      <%= link_to "Editar", edit_order_path(order) %> |
+    <% end %>
+<% end %>
+  <div class="col">
     <strong>Total value:</strong>
     <%= content_tag :span, number_to_currency(order.total_value,  :precision => 0), :id => "total_value" %>
-  </p>
-  <p>
+  </div>
+  <div class="col">
     <strong>Comensales:</strong>
     <%= order.guests %>
-  </p>
-
-  <p>
+  </div>
+  <div class="col">
     <strong>Atendido por:</strong>
     <%= order.user %>
-  </p>
-
-  <p>
+  </div>
+  <div class="col">
     <strong>Customer:</strong>
     <%= order.customer %>
-  </p>
-
-  <p>
-    <strong>Table:</strong>
+  </div>
+  <div class="col">
+    <strong>Mesa:</strong>
     <%= order.table_id %>
-  </p>
-
+  </div>
 </div>
