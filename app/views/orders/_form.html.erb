@@ -14,46 +14,70 @@
       <% end %>
     </div>
   </div>
-  <div class="row justify-content-md-center">
-      <div class="col-sm-12 col-md-6">
-        <%= form.label :date, class: "col-sm-2 col-form-label" %>
-          <div class="col-sm-10">
-        <%= form.date_field :date, class: "form-control form-control-lg" %>
-          </div>
-      </div>
 
-      <div class="col-sm-12 col-md-6">
-        <%= form.label :table_id, class: "col-sm-2 col-form-label" %>
-          <div class="col-sm-10">
-        <%= form.select :table_id, options_from_collection_for_select(Table.all, :id, :name) , {},{"class" => "form-select form-select-lg mb-3", 'aria-label:' => ".form-select-lg example"} %>
-          </div>
-      </div>
 
-      <div class="col-sm-12 col-md-6">
-        <%= form.label :customer_id, class: "col-sm-2 col-form-label" %>
-          <div class="col-sm-10">
-        <%= form.select :customer_id, options_from_collection_for_select(Customer.all.order(:name), :id, :to_s), {:include_blank => true} , class: "form-control form-control-lg" %>
-          </div>
-      </div>
 
-      <div class="col-sm-12 col-md-6">
-        <%= form.label :guests, class: "col-sm-2 col-form-label" %>
-          <div class="col-sm-10">
-        <%= form.number_field :guests , class: "form-control form-control-lg" %>
-          </div>
-      </div>
 
-<% frame_id = dom_id(order, "observations_turbo_frame") %>
-<%= turbo_frame_tag frame_id do %>
-      <div class="col-sm-12 col-md-6 ">
-        <%= form.label :observations, class: "col-sm-2 col-form-label" %>
-        <div class="col-md-6">
-          <%= form.text_area :observations , class: "form-control form-control-lg" %>
+<%= turbo_frame_tag dom_id(order, "date_turbo_frame") do %>
+      <h2><%= link_to content_tag(:i, " ", :class => "bi bi-ui-checks-grid"), @order, class: "text-danger" %></h2>
+      <h3 class="lead">Mesa</h3>
+      <div class="input-group">
+        <%= form.date_field :date, class: "form-control form-control-sm" %>
+        <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+      </div>
+<% end %>
+
+<%= turbo_frame_tag dom_id(order, "table_id_turbo_frame") do %>
+      <h2><%= link_to content_tag(:i, " ", :class => "bi bi-ui-checks-grid"), @order, class: "text-danger" %></h2>
+      <h3 class="lead">Mesa</h3>
+      <div class="input-group">
+        <%= form.select :table_id, options_from_collection_for_select(Table.all, :id, :name, @order.table_id) , {},{"class" => "form-select form-select-sm"} %>
+        <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+      </div>
+<% end %>
+
+<%= turbo_frame_tag dom_id(order, "customer_id_turbo_frame") do %>
+      <h2><%= link_to content_tag(:i, " ", :class => "bi bi-person-square"), @order, class: "text-danger" %></h2>
+      <h3 class="lead">Cliente</h3>
+      <div class="input-group">
+        <%= form.select :customer_id, options_from_collection_for_select(Customer.all.order(:name), :id, :to_s, @order.customer_id), {:include_blank => true}, {class: "form-select form-select-sm"} %>
+        <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+      </div>
+<% end %>
+
+<%= turbo_frame_tag dom_id(order, "guests_turbo_frame") do %>
+        <h2><%= link_to content_tag(:i, " ", :class => "bi bi-people-fill"), @order, class: "text-danger" %></h2>
+        <h3 class="lead">Comensales</h3>
+      <div class="input-group">
+        <%= form.number_field :guests , class: "form-control form-control-sm" %>
+        <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+      </div>
+<% end %>
+
+<%= turbo_frame_tag dom_id(order, "observations_turbo_frame") do %>
+        <%= link_to "Observaciones", @order, class: "text-danger" %>
+        <%= form.text_area :observations , class: "form-control form-control-sm" %>
+        <div class="d-grid gap-2">
+            <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
         </div>
-        <%= form.button "Guardar" %>
+<% end %>
 
-        <%= link_to "Cancelar", @order %>
-      </div>
+
+<%= turbo_frame_tag dom_id(order, "tax_turbo_frame") do %>
+        <div class="input-group">
+            <span class="input-group-text"><%= link_to "Impuesto:", @order, class: "text-danger" %></span>
+            <%= form.number_field :tax , class: "form-control form-control-sm" %>
+            <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+        </div>
+<% end %>
+
+
+<%= turbo_frame_tag dom_id(order, "tip_turbo_frame") do %>
+        <div class="input-group">
+            <span class="input-group-text"><%= link_to "Propina:", @order, class: "text-danger" %></span>
+            <%= form.number_field :tip , class: "form-control form-control-sm" %>
+            <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+        </div>
 <% end %>
 
       <div class="col-sm-12 col-md-6">
@@ -64,5 +88,4 @@
             <%= link_to "Cancelar", orders_path, :class => "btn btn-danger" %>
         </div>
       </div>
-  </div>
     <% end %>

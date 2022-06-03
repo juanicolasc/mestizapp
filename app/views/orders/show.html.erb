@@ -2,24 +2,32 @@
 <div class="container mb-4 mt-5">
     <div class="row" id="<%= dom_id @order %>">
       <div class="col text-center">
-        <h2><%=  content_tag(:i, " ", :class => "bi bi-calendar3") %></h2>
+      <%= render "inline_edit", model: @order, attribute: :date do %>
+        <h2><%= link_to content_tag(:i, " ", :class => "bi bi-calendar3"), edit_order_path(@order) %></h2>
         <h3 class="lead">Fecha:</h3>
         <%= @order.date %>
+      <% end %>
       </div>
       <div class="col text-center">
-        <h2><%=  content_tag(:i, " ", :class => "bi bi-people-fill") %></h2>
-        <h3 class="lead">Comensales:</h3>
+      <%= render "inline_edit", model: @order, attribute: :guests do %>
+        <h2><%= link_to content_tag(:i, " ", :class => "bi bi-people-fill"), edit_order_path(@order) %></h2>
+        <h3 class="lead">Comensales</h3>
         <%= @order.guests %>
+      <% end %>
       </div>
       <div class="col text-center">
-        <h2><%=  content_tag(:i, " ", :class => "bi bi-person-square") %></h2>
-        <h3 class="lead">Cliente:</h3>
+      <%= render "inline_edit", model: @order, attribute: :customer_id do %>
+        <h2><%= link_to content_tag(:i, " ", :class => "bi bi-person-square"), edit_order_path(@order) %></h2>
+        <h3 class="lead">Cliente</h3>
         <%= @order.customer %>
+      <% end %>
       </div>
       <div class="col text-center">
-        <h2><%=  content_tag(:i, " ", :class => "bi bi-ui-checks-grid") %></h2>
-        <h3 class="lead">Mesa:</h3>
+      <%= render "inline_edit", model: @order, attribute: :table_id do %>
+        <h2><%= link_to content_tag(:i, " ", :class => "bi bi-ui-checks-grid"), edit_order_path(@order) %></h2>
+        <h3 class="lead">Mesa</h3>
         <%= @order.table_id %>
+      <% end %>
       </div>
     </div>
 </div>
@@ -47,16 +55,27 @@
       <div class="col"></div>
   </div>
 </div>
+<div class="container">
+  <div class="row">
+      <%= render "inline_edit", model: @order, attribute: :tax do %>
+        <strong><%= link_to "Impuestos", edit_order_path(@order), class: "text-dark" %>:</strong>
+        <%= @order.tax %>
+      <% end %>
+  </div>
+  <div class="row">
+      <%= render "inline_edit", model: @order, attribute: :tip do %>
+        <strong><%= link_to "Propina", edit_order_path(@order), class: "text-dark" %>:</strong>
+        <%= @order.tip %>
+      <% end %>
+  </div>
+</div>
 <hr>
 <div class="container">
   <div class="row">
-    <% frame_id = dom_id(@order, "observations_turbo_frame") %>
-    <%= form_with(model: @order, class: "col", data: { turbo_frame: frame_id}) do %>
-        <%= turbo_frame_tag frame_id do %>
-            <strong><%= link_to "Observaciones", edit_order_path(@order), class: "text-dark" %>:</strong>
-            <%= @order.observations %>
-        <% end %>
-    <% end %>
+      <%= render "inline_edit", model: @order, attribute: :observations do %>
+        <strong><%= link_to "Observaciones", edit_order_path(@order), class: "text-dark" %>:</strong>
+        <%= @order.observations %>
+      <% end %>
   </div>
   <div class="row">
     <div class="col">

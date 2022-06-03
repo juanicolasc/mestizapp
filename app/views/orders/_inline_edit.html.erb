@@ -1,0 +1,6 @@
+    <% frame_id = dom_id(model, "#{attribute}_turbo_frame") %>
+    <%= form_with(model: model, class: "col", data: { turbo_frame: frame_id}) do %>
+        <%= turbo_frame_tag frame_id do %>
+            <%= yield %>
+        <% end %>
+    <% end %>
