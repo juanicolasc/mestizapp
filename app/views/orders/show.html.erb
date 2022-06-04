@@ -55,28 +55,41 @@
       <div class="col"></div>
   </div>
 </div>
-<div class="container">
-  <div class="row">
+<div class="container row">
+ <div class="col">
+      <%= render "inline_edit", model: @order, attribute: :aditions do %>
+       <div class="row">
+        <span class="col-5 text-end h5 text-dark"><%= link_to "Adicionales", edit_order_path(@order) %>:</span>
+        <%= content_tag :span, number_to_currency(@order.aditions,  :precision => 0), class: "col-7" %>
+       </div>
+      <% end %>
       <%= render "inline_edit", model: @order, attribute: :tax do %>
-        <strong><%= link_to "Impuestos", edit_order_path(@order), class: "text-dark" %>:</strong>
-        <%= @order.tax %>
+       <div class="row">
+        <span class="col-5 text-end h5 text-dark"><%= link_to "Impuestos", edit_order_path(@order) %>:</span>
+        <%= content_tag :span, number_to_currency(@order.tax,  :precision => 0), class: "col-7" %>
+       </div>
       <% end %>
-  </div>
-  <div class="row">
       <%= render "inline_edit", model: @order, attribute: :tip do %>
-        <strong><%= link_to "Propina", edit_order_path(@order), class: "text-dark" %>:</strong>
-        <%= @order.tip %>
+       <div class="row">
+        <span class="col-5 text-end h5 text-dark"><%= link_to "Propina", edit_order_path(@order) %>:</span>
+        <%= content_tag :span, number_to_currency(@order.tip,  :precision => 0), class: "col-7" %>
+       </div>
       <% end %>
-  </div>
-</div>
-<hr>
-<div class="container">
+ </div>
+ <div class="col">
   <div class="row">
       <%= render "inline_edit", model: @order, attribute: :observations do %>
         <strong><%= link_to "Observaciones", edit_order_path(@order), class: "text-dark" %>:</strong>
         <%= @order.observations %>
       <% end %>
   </div>
+  <div class="row">
+      <h3>Total: <%= content_tag :span, number_to_currency(@order.final_value,  :precision => 0), :id => "final_value" %></h3>
+  </div>
+ </div>
+</div>
+<hr>
+<div class="container">
   <div class="row">
     <div class="col">
         <strong>Atendido por:</strong>

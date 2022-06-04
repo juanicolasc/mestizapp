@@ -80,6 +80,14 @@
         </div>
 <% end %>
 
+<%= turbo_frame_tag dom_id(order, "aditions_turbo_frame") do %>
+        <div class="input-group">
+            <span class="input-group-text"><%= link_to "Adicionales:", @order, class: "text-danger" %></span>
+            <%= form.number_field :aditions , class: "form-control form-control-sm" %>
+            <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+        </div>
+<% end %>
+
       <div class="col-sm-12 col-md-6">
         <%= form.label :user_id, "Creado por:", class: "col-sm-4 col-form-label" %>
         <div class="col-sm-8">
