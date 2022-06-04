@@ -11,8 +11,18 @@ class Order < ApplicationRecord
 
 
   def update_total
-      tips = self.tip || 0
-      self.update(:total_value => (self.items.map(&:total).inject(0, &:+))+tips )
+      self.update(:total_value => (self.items.map(&:total).inject(0, &:+)))
   end
 
+  before_create do
+      self.total_value = 0
+      self.aditions = 0
+      self.final_value = 0
+      self.tax = 0
+      self.tip = 0
+  end
+
+  before_save do
+      self.final_value = (self.total_value + self.aditions + self.tax + self.tip)
+  end
 end

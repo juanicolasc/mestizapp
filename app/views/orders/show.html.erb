@@ -63,12 +63,6 @@
         <%= content_tag :span, number_to_currency(@order.aditions,  :precision => 0), class: "col-7" %>
        </div>
       <% end %>
-      <%= render "inline_edit", model: @order, attribute: :tax do %>
-       <div class="row">
-        <span class="col-5 text-end h5 text-dark"><%= link_to "Impuestos", edit_order_path(@order) %>:</span>
-        <%= content_tag :span, number_to_currency(@order.tax,  :precision => 0), class: "col-7" %>
-       </div>
-      <% end %>
       <%= render "inline_edit", model: @order, attribute: :tip do %>
        <div class="row">
         <span class="col-5 text-end h5 text-dark"><%= link_to "Propina", edit_order_path(@order) %>:</span>
