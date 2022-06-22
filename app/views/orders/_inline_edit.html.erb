@@ -2,11 +2,5 @@
     <%= form_with(model: model, class: "col", data: { turbo_frame: frame_id}) do %>
         <%= turbo_frame_tag frame_id do %>
             <%= yield %>
-             <script>
-                  var element = document.getElementById("final_value");
-                  if(element){
-                      element.innerHTML = "<%= number_to_currency(@order.final_value,  :precision => 0) %>";
-                  }
-             </script>
         <% end %>
     <% end %>

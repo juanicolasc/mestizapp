@@ -1,6 +1,12 @@
 class ItemsController < ApplicationController
   before_action :set_order
   append_before_action :set_item, only: [:edit, :update, :destroy]
+  append_before_action do
+    unless current_user
+      flash[:alert] = 'No tiene permiso para esta acción'
+      redirect_to root_path
+    end
+  end
 
   def new
     @item = @order.items.build

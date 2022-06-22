@@ -88,12 +88,21 @@
         </div>
 <% end %>
 
-      <div class="col-sm-12 col-md-6">
-        <%= form.label :user_id, "Creado por:", class: "col-sm-4 col-form-label" %>
-        <div class="col-sm-8">
-            <b ><%= current_user.email -%></b><br>
-            <%= form.submit "Guardar", :class => "btn btn-primary" %>
-            <%= link_to "Cancelar", orders_path, :class => "btn btn-danger" %>
-        </div>
+<%= turbo_frame_tag dom_id(order, "payment_method_turbo_frame") do %>
+      <div class="input-group">
+        <%= form.hidden_field :status, value: "Pagada" %>
+        <%= form.select :payment_method, Order::PAYMENT_METHODS, {},{"class" => "form-select form-select-sm"} %>
+        <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
       </div>
+<% end %>
+
+<%= turbo_frame_tag dom_id(order, "status_turbo_frame") do %>
+      <div class="input-group">
+        <span class="input-group-text">¿Estás Seguro?</span>
+        <%= form.hidden_field :status, value: "Cuenta" %>
+        <%= form.button content_tag(:i, " ", :class => "bi bi-check")+" Sí", class: "btn btn-success btn-sm" %>
+        <%= link_to content_tag(:i, " ", :class => "bi bi-x")+" No", @order, class: "btn btn-danger btn-sm" %>
+      </div>
+<% end %>
+
     <% end %>

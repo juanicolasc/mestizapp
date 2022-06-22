@@ -4,10 +4,15 @@ class Order < ApplicationRecord
   belongs_to :table
   has_many :items
 
-
   validates_presence_of :table
   validates_presence_of :date
   validates :guests, numericality: { only_integer: true, greater_than_or_equal_to: 1  }
+
+  VALID_STATUSES = ['Iniciada', 'Sirviendo', 'Cuenta', 'Pagada']
+  #TODO: se pueden agregar más métodos de pago no quiero hacer un modelo con esto aún
+  PAYMENT_METHODS = ['Efectivo', 'Nequi']
+
+  validates :status, inclusion: { in: VALID_STATUSES }
 
 
   def update_total
@@ -15,6 +20,7 @@ class Order < ApplicationRecord
   end
 
   before_create do
+      self.status = 'Iniciada'
       self.total_value = 0
       self.aditions = 0
       self.final_value = 0
@@ -24,5 +30,8 @@ class Order < ApplicationRecord
 
   before_save do
       self.final_value = (self.total_value + self.aditions + self.tax + self.tip)
+      if self.payment_method
+          self.status = 'Cuenta'
+      end
   end
 end
