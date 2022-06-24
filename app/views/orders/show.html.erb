@@ -146,10 +146,16 @@
             <%= form_with(model: @order) do |form| %>
               <div class="input-group">
                 <%= form.hidden_field :status, value: "Pagada" %>
-                <%= form.select :payment_method, Order::PAYMENT_METHODS, {},{"class" => "form-select form-select-sm"} %>
+                <%= form.select :payment_method, Order::PAYMENT_METHODS, {},{"class" => "form-select form-select-sm", "data" => { :action => "change->orders#calculator"}} %>
                 <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
               </div>
             <% end %>
+            <div class="input-group" id="calculator">
+              <span class="input-group-text">Recibidido</span>
+              <input type="text" value="<%= @order.final_value %>" data-orders-original-param="<%= @order.final_value %>" aria-label="First name" class="form-control" data-action="input->orders#calculate">
+              <span class="input-group-text">Cambio</span>
+              <input type="text" value="0" aria-label="Last name" class="form-control" id="change" readonly>
+            </div>
           <% end %>
         <% end %>
     </div>
