@@ -1,30 +1,47 @@
+
 <h1>Pedido No: <%= @order.id %></h1>
 <div class="container mb-4 mt-5">
     <div class="row" id="<%= dom_id @order %>">
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :date do %>
+      <% if @order.alive? %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-calendar3"), edit_order_path(@order) %></h2>
+      <% else %>
+        <h2><%= content_tag(:i, " ", :class => "bi bi-calendar3 text-secondary") %></h2>
+      <% end %>
         <h3 class="lead">Fecha:</h3>
         <%= @order.date %>
       <% end %>
       </div>
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :guests do %>
+      <% if @order.alive? %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-people-fill"), edit_order_path(@order) %></h2>
+      <% else %>
+        <h2><%= content_tag(:i, " ", :class => "bi bi-people-fill text-secondary") %></h2>
+      <% end %>
         <h3 class="lead">Comensales</h3>
         <%= @order.guests %>
       <% end %>
       </div>
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :customer_id do %>
+      <% unless @order.closed? %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-person-square"), edit_order_path(@order) %></h2>
+      <% else %>
+        <h2><%= content_tag(:i, " ", :class => "bi bi-person-square text-secondary") %></h2>
+      <% end %>
         <h3 class="lead">Cliente</h3>
         <%= @order.customer %>
       <% end %>
       </div>
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :table_id do %>
+      <% if @order.alive? %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-ui-checks-grid"), edit_order_path(@order) %></h2>
+      <% else %>
+        <h2><%= content_tag(:i, " ", :class => "bi bi-ui-checks-grid text-secondary") %></h2>
+      <% end %>
         <h3 class="lead">Mesa</h3>
         <%= @order.table_id %>
       <% end %>
@@ -40,7 +57,9 @@
       <div class="col-2 overflow-hidden">Precio U.</div>
       <div class="col text-center">Total</div>
       <div class="col text-end">
+      <% if @order.alive? %>
         <%= link_to content_tag(:i, " ", :class => "bi bi-plus-circle d-block d-sm-none")+content_tag(:span, "Agregar", :class => "d-none d-sm-block"), new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %>
+      <% end %>
       </div>
   </div>
   <%= turbo_frame_tag "items", class: "align-items-bottom"  do %>
@@ -59,7 +78,13 @@
  <div class="col">
       <%= render "inline_edit", model: @order, attribute: :aditions do %>
        <div class="row">
-        <span class="col-5 text-end h5 text-dark"><%= link_to "Adicionales", edit_order_path(@order) %>:</span>
+        <span class="col-5 text-end h5 text-dark">
+          <% unless @order.closed? %>
+            <%= link_to "Adicionales:", edit_order_path(@order) %>
+          <% else %>
+            <%= content_tag "span", "Adicionales:" %>
+          <% end %>
+        </span>
         <%= content_tag :span, number_to_currency(@order.aditions,  :precision => 0), class: "col-7" %>
          <script>
               var element = document.getElementById("final_value");
@@ -71,7 +96,13 @@
       <% end %>
       <%= render "inline_edit", model: @order, attribute: :tip do %>
        <div class="row">
-        <span class="col-5 text-end h5 text-dark"><%= link_to "Propina", edit_order_path(@order) %>:</span>
+        <span class="col-5 text-end h5 text-dark">
+          <% unless @order.closed? %>
+            <%= link_to "Propina:", edit_order_path(@order) %>
+          <% else %>
+            <%= content_tag "span", "Propina:" %>
+          <% end %>
+        </span>
         <%= content_tag :span, number_to_currency(@order.tip,  :precision => 0), class: "col-7" %>
          <script>
               var element = document.getElementById("final_value");
@@ -85,8 +116,12 @@
  <div class="col">
   <div class="row">
       <%= render "inline_edit", model: @order, attribute: :observations do %>
-        <strong><%= link_to "Observaciones", edit_order_path(@order), class: "text-dark" %>:</strong>
-        <%= @order.observations %>
+          <% unless @order.closed? %>
+            <strong><%= link_to "Observaciones:", edit_order_path(@order) %></strong>
+          <% else %>
+            <strong><%= content_tag "span", "Observaciones:" %></strong>
+          <% end %>
+            <%= @order.observations %>
       <% end %>
   </div>
   <div class="row">
@@ -102,25 +137,39 @@
         <%= @order.user %>
     </div>
     <div class="col">
-     <% if @order.status == 'Cuenta' %>
+       <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") if @order.closed? %>
        <%= render "inline_edit", model: @order, attribute: :payment_method do %>
-        <%= link_to "Pagar", edit_order_path(@order), class: "btn btn-secondary" %>
+         <% if @order.status == 'Cuenta' %>
+            <%= link_to content_tag(:i, " ", :class => "bi bi-cash-stack")+" Pagar", edit_order_path(@order), class: "btn btn-info", id: "payment-btn" %>
+         <% elsif @order.closed?  %>
+            <script>
+                  if(!document.getElementById("payment-label")){location.reload();}
+            </script>
+         <% end %>
        <% end %>
-     <% elsif @order.status == 'Iniciada' or @order.status == 'Sirviendo'%>
-        <%= render "inline_edit", model: @order, attribute: :status do %>
-        <%= link_to "Solicitar Cuenta", edit_order_path(@order), class: "btn btn-secondary" %>
+       <%= render "inline_edit", model: @order, attribute: :status do %>
+         <% if @order.alive? %>
+            <%= link_to content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", edit_order_path(@order), class: "btn btn-info" %>
+         <% elsif  @order.status == 'Cuenta' %>
+            <script>
+                  if(!document.getElementById("payment-btn")){location.reload();}
+            </script>
+         <% end %>
        <% end %>
-     <% end %>
     </div>
   </div>
 </div>
 <hr>
 <div class="container">
-  <%= link_to "Edit this order", edit_order_path(@order) %> ¬
-  <%= link_to "Back to orders", orders_path %>
-
-  <%= button_to "Destroy this order", @order, method: :delete %>
-
+  <div class="row">
+    <div class="col-auto">
+  <%= link_to content_tag(:i, " ", :class => "bi bi-backspace")+" Volver", orders_path, :class => "btn btn-warning", data: { :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "top"  }, :title => "Volver al listado de Ordenes" %>
+    </div>
+    <div class="col-4">
+        <% unless !current_user.admin? %>
+  <%= button_to(content_tag(:i, " ", :class => "bi bi-trash")+" Anular esta Orden", @order, {method: :delete, data: { :confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-danger"}) %>
+        <% end %>
+    </div>
 </div>
 
 

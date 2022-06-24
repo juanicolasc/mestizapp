@@ -54,6 +54,7 @@
       <div class="col-sm-12 col-md-6">
         <%= form.label :user_id, "Creado por:", class: "col-sm-4 col-form-label" %>
         <div class="col-sm-8">
+            <%= form.hidden_field :status, value: "Iniciada" %>
             <b ><%= current_user.email -%></b><br>
             <%= form.submit "Guardar", :class => "btn btn-primary" %>
             <%= link_to "Cancelar", orders_path, :class => "btn btn-danger" %>

@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
   append_before_action do
-    unless current_user
+    if (!current_user or (action_name == "destroy" and !current_user.admin?))
       flash[:alert] = 'No tiene permiso para esta acción'
       redirect_to root_path
     end
@@ -63,7 +63,7 @@ class OrdersController < ApplicationController
     @order.update(:active => false)
 
     respond_to do |format|
-      format.html { redirect_to order_url(@order), notice: "Se eliminó la orden." }
+      format.html { redirect_to orders_url, notice: "Se anuló la orden." }
       format.json { head :no_content }
     end
   end

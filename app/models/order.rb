@@ -19,19 +19,24 @@ class Order < ApplicationRecord
       self.update(:total_value => (self.items.map(&:total).inject(0, &:+)))
   end
 
-  before_create do
-      self.status = 'Iniciada'
-      self.total_value = 0
-      self.aditions = 0
-      self.final_value = 0
-      self.tax = 0
-      self.tip = 0
+  def alive?
+      (self.status == 'Iniciada' or self.status == 'Sirviendo')
+  end
+
+  def closed?
+      (self.status == 'Pagada')
+  end
+
+  after_initialize do
+      self.status ||= 'Iniciada'
+      self.total_value ||= 0
+      self.aditions ||= 0
+      self.final_value ||= 0
+      self.tax ||= 0
+      self.tip ||= 0
   end
 
   before_save do
       self.final_value = (self.total_value + self.aditions + self.tax + self.tip)
-      if self.payment_method
-          self.status = 'Cuenta'
-      end
   end
 end
