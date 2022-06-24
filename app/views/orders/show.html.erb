@@ -1,4 +1,4 @@
-
+<div  data-controller="orders">
 <h1>Pedido No: <%= @order.id %></h1>
 <div class="container mb-4 mt-5">
     <div class="row" id="<%= dom_id @order %>">
@@ -140,7 +140,7 @@
         <% if @order.closed?  %>
           <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") %>
         <% elsif @order.alive? %>
-          <%= button_to(content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", @order, {method: :put, data: { 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-info", params: { "order[status]" => 'Cuenta'}}) %>
+          <%= button_to(content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", @order, {method: :put, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-info", params: { "order[status]" => 'Cuenta'}}) %>
         <% else %>
           <% if current_user.admin? %>
             <%= form_with(model: @order) do |form| %>
@@ -159,13 +159,14 @@
 <div class="container">
   <div class="row">
     <div class="col-auto">
-  <%= link_to content_tag(:i, " ", :class => "bi bi-backspace")+" Volver", orders_path, :class => "btn btn-warning", data: { :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "top"  }, :title => "Volver al listado de Ordenes" %>
+  <%= link_to content_tag(:i, " ", :class => "bi bi-backspace")+" Volver", orders_path, :class => "btn btn-warning", data: { :action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "top"  }, :title => "Volver al listado de Ordenes" %>
     </div>
     <div class="col-7 col-sm-4 ">
         <% if current_user.admin? %>
-  <%= button_to(content_tag(:i, " ", :class => "bi bi-trash")+" Anular esta Orden", @order, {method: :delete, data: { :confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-danger"}) %>
+  <%= button_to(content_tag(:i, " ", :class => "bi bi-trash")+" Anular esta Orden", @order, {method: :delete, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-danger"}) %>
         <% end %>
     </div>
+  </div>
 </div>
-
+</div>
 
