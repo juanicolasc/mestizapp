@@ -137,25 +137,21 @@
         <%= @order.user %>
     </div>
     <div class="col">
-       <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") if @order.closed? %>
-       <%= render "inline_edit", model: @order, attribute: :payment_method do %>
-         <% if @order.status == 'Cuenta' %>
-            <%= link_to content_tag(:i, " ", :class => "bi bi-cash-stack")+" Pagar", edit_order_path(@order), class: "btn btn-info", id: "payment-btn" %>
-         <% elsif @order.closed?  %>
-            <script>
-                  if(!document.getElementById("payment-label")){location.reload();}
-            </script>
-         <% end %>
-       <% end %>
-       <%= render "inline_edit", model: @order, attribute: :status do %>
-         <% if @order.alive? %>
-            <%= link_to content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", edit_order_path(@order), class: "btn btn-info" %>
-         <% elsif  @order.status == 'Cuenta' %>
-            <script>
-                  if(!document.getElementById("payment-btn")){location.reload();}
-            </script>
-         <% end %>
-       <% end %>
+        <% if @order.closed?  %>
+          <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") %>
+        <% elsif @order.alive? %>
+          <%= button_to(content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", @order, {method: :put, data: { 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-info", params: { "order[status]" => 'Cuenta'}}) %>
+        <% else %>
+          <% if current_user.admin? %>
+            <%= form_with(model: @order) do |form| %>
+              <div class="input-group">
+                <%= form.hidden_field :status, value: "Pagada" %>
+                <%= form.select :payment_method, Order::PAYMENT_METHODS, {},{"class" => "form-select form-select-sm"} %>
+                <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
     </div>
   </div>
 </div>
@@ -165,8 +161,8 @@
     <div class="col-auto">
   <%= link_to content_tag(:i, " ", :class => "bi bi-backspace")+" Volver", orders_path, :class => "btn btn-warning", data: { :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "top"  }, :title => "Volver al listado de Ordenes" %>
     </div>
-    <div class="col-4">
-        <% unless !current_user.admin? %>
+    <div class="col-7 col-sm-4 ">
+        <% if current_user.admin? %>
   <%= button_to(content_tag(:i, " ", :class => "bi bi-trash")+" Anular esta Orden", @order, {method: :delete, data: { :confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-danger"}) %>
         <% end %>
     </div>
