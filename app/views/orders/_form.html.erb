@@ -73,9 +73,11 @@
 
 
 <%= turbo_frame_tag dom_id(order, "tip_turbo_frame") do %>
-        <div class="input-group">
+        <div class="input-group" data-controller="orders">
             <span class="input-group-text"><%= link_to "Propina:", @order, class: "text-danger" %></span>
             <%= form.number_field :tip , class: "form-control form-control-sm" %>
+            <button class="btn btn-outline-secondary" type="button" data-action="click->orders#tip" data-orders-percentage-param="0.05" data-orders-final-param="<%= @order.final_value %>">5%</button>
+            <button class="btn btn-outline-secondary" type="button" data-action="click->orders#tip" data-orders-percentage-param="0.1"  data-orders-final-param="<%= @order.final_value %>">10%</button>
             <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
         </div>
 <% end %>

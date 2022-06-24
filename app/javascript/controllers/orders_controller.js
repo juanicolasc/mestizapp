@@ -20,12 +20,14 @@ export default class extends Controller {
       }
   }
   calculate(event) {
-      console.log(event.params.original)
       let curent = event.currentTarget.value
       if(curent > event.params.original){
           document.querySelector("#change").value = curent - event.params.original
       }else{
           document.querySelector("#change").value = 0
       }
+  }
+  tip(event) {
+      document.querySelector("#order_tip").value = (event.params.final * event.params.percentage)
   }
 }
