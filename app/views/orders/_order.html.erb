@@ -1,36 +1,20 @@
-<div class="row" id="<%= dom_id order %>">
-  <div class="col">
-    <strong>Date:</strong>
-    <%= order.date %>
+<div class="row <%= cycle('bg-light', 'bg-success bg-opacity-10') -%>">
+  <div class="col-1 overflow-hidden order-md-0">
+    <h2><%= link_to order.table.name, order, :class => "text-dark" %></h2>
   </div>
-<% frame_id = dom_id(order, "observations_turbo_frame") %>
-<%= form_with(model: order, class: "col", data: { turbo_frame: frame_id}) do %>
-    <%= turbo_frame_tag frame_id do %>
-      <div class="col">
-        <strong>Observaciones:</strong>
-        <%= order.observations %>
-      </div>
-      <%= link_to "Editar", edit_order_path(order) %> |
-    <% end %>
-<% end %>
-  <div class="col">
-    <strong>Total value:</strong>
-    <%= content_tag :span, number_to_currency(order.total_value,  :precision => 0), :id => "total_value" %>
+  <div class="col order-md-1">
+    <h3><%= link_to order.id, order, :class => "text-dark" %></h3>
   </div>
-  <div class="col">
-    <strong>Comensales:</strong>
-    <%= order.guests %>
-  </div>
-  <div class="col">
-    <strong>Atendido por:</strong>
-    <%= order.user %>
-  </div>
-  <div class="col">
-    <strong>Customer:</strong>
+  <div class="col-12 col-md-2 order-last order-md-2">
     <%= order.customer %>
   </div>
-  <div class="col">
-    <strong>Mesa:</strong>
-    <%= order.table_id %>
+  <div class="col-2 order-md-3">
+    <%= order.observations %>
+  </div>
+  <div class="col order-md-4">
+    <%= order.guests %>
+  </div>
+  <div class="col order-md-5">
+    <span class="d-inline-flex px-2 py-2 fw-semibold <%= order.alive? ? 'bg-success border-success' : 'bg-warning border-warning' %> bg-opacity-10 border border-opacity-10 rounded-2 "><%= link_to order.status, order, class: "text-dark" %></span>
   </div>
 </div>

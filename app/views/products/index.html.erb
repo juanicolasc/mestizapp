@@ -1,20 +1,16 @@
-
-<div class="px-3 py-2 border-bottom mb-3">
-  <div class="container d-flex flex-wrap justify-content-center">
-   <a href="<%= products_path -%>" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <span class="fs-4 bolder">Productos</span>
-    </a>
-
-
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-      <input type="search" class="form-control form-control-dark text-blue-800 bg-light" placeholder="Buscar..." aria-label="Search">
+<nav class="navbar bg-light">
+  <div class="container-fluid">
+    <h2 class="navbar-brand" >Productos</h2>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="buscar..." aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
     </form>
-
     <div class="text-end">
       <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Producto", new_product_path, :class => "btn btn-primary" %>
     </div>
   </div>
-</div>
+</nav>
+
 
 <table class="table table-responsive">
   <thead>

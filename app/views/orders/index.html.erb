@@ -1,14 +1,24 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Orders</h1>
-
-<div id="orders">
-  <% @orders.each do |order| %>
-    <%= render order %>
-    <p>
-      <%= link_to "Show this order", order %>
-    </p>
-  <% end %>
+<nav class="navbar bg-light">
+  <div class="container-fluid">
+    <h2 class="navbar-brand" >Pedidos</h2>
+    <div class="text-end">
+      <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Pedido", new_order_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+</nav>
+<div class="container"  id="orders">
+  <div class="row bg-light border-bottom border-3 fw-bolder text-nowrap align-items-center">
+      <div class="col-1">Mesa</div>
+      <div class="col">Pedido No</div>
+      <div class="col-2 d-none d-md-block overflow-hidden">Cliente</div>
+      <div class="col-2 overflow-hidden">Observaciones</div>
+      <div class="col">No. comensales</div>
+      <div class="col">Estado</div>
+  </div>
+  <div>
+    <%= render @orders %>
+  </div>
+  <div class="row bg-light border-top border-3 fw-bolder text-nowrap align-items-center">
+  </div>
 </div>
 
-<%= link_to "New order", new_order_path %>

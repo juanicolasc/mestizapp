@@ -12,34 +12,41 @@
 
  <body class="d-flex flex-column h-100">
       <main class="flex-shrink-0">
-            <header>
-            <div class="px-3 py-2 bg-dark text-white">
-              <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                  <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                    <h1>Mestizapp</h1>
-                  </a>
-
-                  <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                  <li>
-                      <%= link_to content_tag(:i, "Productos", :class => "bi bi-file-check"), products_path, :class => 'nav-link text-white'  %>
-                  </li>
-                  <li>
-                      <%= link_to content_tag(:i, "Mesas", :class => "bi bi-grid-1x2-fill"), tables_path, :class => 'nav-link text-white'  %>
-                  </li>
-                  <li>
-                      <%= link_to content_tag(:i, "Pedidos", :class => "bi bi-calculator-fill"), orders_path, :class => 'nav-link text-white'  %>
-                  </li>
-                  <li>
-                      <%= link_to content_tag(:i, "Clientes", :class => "bi bi-people-fill"), customers_path, :class => 'nav-link text-white'  %>
-                  </li>
-                  <li>
-                      <%= link_to content_tag(:i, "Usuarios", :class => "bi bi-people"), users_path, :class => 'nav-link text-white'  %>
-                  </li>
+          <header>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+              <div class="container-fluid">
+                <a class="navbar-brand h1">MestizApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item text-center">
+                      <%= link_to content_tag(:i, "", :class => "bi bi-file-check")+" Productos", products_path, :class => 'nav-link '  %>
+                    </li>
+                    <li class="nav-item text-center">
+                      <%= link_to content_tag(:i, "", :class => "bi bi-grid-1x2-fill")+" Mesas", tables_path, :class => 'nav-link text-white'  %>
+                    </li>
+                    <li class="nav-item text-center">
+                      <%= link_to content_tag(:i, "", :class => "bi bi-calculator-fill")+" Pedidos", orders_path, :class => 'nav-link text-white'  %>
+                    </li>
+                    <li class="nav-item text-center">
+                      <%= link_to content_tag(:i, "", :class => "bi bi-people-fill")+" Clientes", customers_path, :class => 'nav-link text-white'  %>
+                    </li>
+                    <li class="nav-item text-center">
+                      <%= link_to content_tag(:i, "", :class => "bi bi-people")+" Usuarios", users_path, :class => 'nav-link text-white'  %>
+                    </li>
                   </ul>
+                  <div class="d-flex">
+                    <% if current_user %>
+                        <%= link_to "Salir", log_out_path, :class =>"btn btn-warning text-dark me-2"  %>
+                    <% else %>
+                        <%= link_to "Iniciar", log_in_path, :class =>"btn btn-primary" %>
+                    <% end %>
+                  </div>
                 </div>
               </div>
-            </div>
+            </nav>
           </header>
           <div id="notices" class="container">
                 <% if notice %>
@@ -57,10 +64,7 @@
           <div class="container">
             <div class="text-end">
               <% if current_user %>
-                        <b><%= current_user.email -%></b>
-                        <%= link_to "Salir", log_out_path, :class =>"btn btn-warning text-dark me-2"  %>
-              <% else %>
-                        <%= link_to "Iniciar", log_in_path, :class =>"btn btn-primary" %>
+                <b><%= current_user.email -%></b>
               <% end %>
             </div>
           </div>

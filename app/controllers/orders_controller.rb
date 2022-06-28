@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.where(:active => true)
+    @orders = Order.where(:active => true, :status => ['Iniciada', 'Sirviendo'])
   end
 
   # GET /orders/1 or /orders/1.json
