@@ -2,3 +2,4 @@
 <%= turbo_stream.update "total_value", number_to_currency(@item.order.total_value,  :precision => 0) %>
 <%= turbo_stream.update "final_value", number_to_currency(@item.order.final_value,  :precision => 0) %>
 <%= turbo_stream.update "notices", content_tag(:p, notice, :class => "alert alert-warning") %>
+<%= turbo_stream.update "next-step", button_to(content_tag(:i, " ", :class => "bi bi-check-circle")+" Confirmar", @order, {method: :put, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Confirmar Pedido", class: "btn btn-info", params: { "order[status]" => 'Sirviendo'}}) %>

@@ -136,7 +136,7 @@
         <strong>Atendido por:</strong>
         <%= @order.user %>
     </div>
-    <div class="col">
+    <div id="next-step" class="col">
       <% if @order.active %>
         <% if @order.closed?  %>
           <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") %>
