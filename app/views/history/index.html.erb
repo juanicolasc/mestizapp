@@ -1,0 +1,43 @@
+<nav class="navbar bg-light">
+    <h2 class="navbar-brand" >Historial de Pedidos</h2>
+    <%= search_form_for(@q, url: history_path, method: :get, class: 'd-flex') do |f| %>
+        <%= f.search_field :observations_or_table_name_cont, placeholder: "Busca por mesa u observac...", class: 'form-control' %>
+        <%= f.submit "Buscar!", class: 'btn btn-outline-success' %>
+    <% end %>
+    <div class="text-end">
+      <!--%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Pedido", new_order_path, :class => "btn btn-primary" %-->
+    </div>
+</nav>
+<div class="table-responsive-lg">
+    <table  class="table table-striped  table-bordered  table-sm caption-top">
+      <thead>
+        <tr>
+          <th scope="col"><%= sort_link(@q, :id, "#", default_order: :asc) %></th>
+          <th scope="col"><%= sort_link(@q, :date, "Fecha", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :table_name, "Mesa", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :guests, "Comensales", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :observations, "Observaciones", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :total_value, "Valor Total", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :aditions, "Adicionales", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :tip, "Propina", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :final_value, "Valor Final", default_order: :desc) %></th>
+          <th scope="col"><%= sort_link(@q, :status, "Estado", default_order: :desc) %></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @orders.each do |order| %>
+        <%= render 'history/order', order: order %>
+        <% end %>
+      </tbody>
+
+      <tfoot>
+          <th colspan="5" ></th>
+          <th ></th>
+      </tfoot>
+    </table>
+</div>
+<div id="pager" class="min-w-full my-8 flex justify-between">
+    <%== pagy_bootstrap_nav(@pagy) %>
+</div>

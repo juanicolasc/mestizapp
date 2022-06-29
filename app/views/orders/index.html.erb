@@ -2,6 +2,9 @@
   <div class="container-fluid">
     <h2 class="navbar-brand" >Pedidos</h2>
     <div class="text-end">
+     <% if current_user && current_user.admin? %>
+      <%= link_to content_tag(:i, " ", :class => "bi bi-clock-history")+"Historial", history_path , :class => "btn btn-outline-dark"%>
+     <% end %>
       <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Pedido", new_order_path, :class => "btn btn-primary" %>
     </div>
   </div>

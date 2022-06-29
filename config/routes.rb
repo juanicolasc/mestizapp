@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'history', to: 'history#index'
   root "sessions#new"
   resources :orders do
       resources :items, except: [:index, :show]

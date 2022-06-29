@@ -1,0 +1,13 @@
+<tr id="<%= dom_id order %>"  scope="row">
+    <td class="text-center"><%= order.id %></td>
+    <td class="text-center"><%= order.date %></td>
+    <td class="text-center"><%= order.table.name %></td>
+    <td class="text-center"><%= order.guests %></td>
+    <td class="text-start"><%= order.observations %></td>
+    <td class="text-end"><%= number_to_currency(order.total_value,  :precision => 0) %></td>
+    <td class="text-end"><%= number_to_currency(order.aditions,  :precision => 0) %></td>
+    <td class="text-end"><%= number_to_currency(order.tip,  :precision => 0) %></td>
+    <td class="text-end"><%= number_to_currency(order.final_value,  :precision => 0) %></td>
+    <td class="text-center"><%= order.status %></td>
+    <td class="text-center"><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), order, :class => "btn btn-success btn-sm", :title => "Ver en Detalle", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %></td>
+</tr>
