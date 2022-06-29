@@ -140,8 +140,10 @@
       <% if @order.active %>
         <% if @order.closed?  %>
           <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") %>
-        <% elsif @order.alive? %>
-          <%= button_to(content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", @order, {method: :put, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-info", params: { "order[status]" => 'Cuenta'}}) %>
+        <% elsif @order.status == 'Sirviendo' %>
+          <%= button_to(content_tag(:i, " ", :class => "bi bi-receipt")+" Solicitar Cuenta", @order, {method: :put, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Solicitar Cuenta", class: "btn btn-info", params: { "order[status]" => 'Cuenta'}}) %>
+        <% elsif @order.status == 'Iniciada' %>
+          <%= button_to(content_tag(:i, " ", :class => "bi bi-check-circle")+" Confirmar", @order, {method: :put, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Confirmar Pedido", class: "btn btn-info", params: { "order[status]" => 'Sirviendo'}}) %>
         <% else %>
           <% if current_user.admin? %>
             <%= form_with(model: @order) do |form| %>

@@ -14,9 +14,9 @@ class Order < ApplicationRecord
 
   validates :status, inclusion: { in: VALID_STATUSES }
 
-
+  #metodo para actualiza
   def update_total
-      self.update(:total_value => (self.items.map(&:total).inject(0, &:+)))
+      self.update(:total_value => (self.items.map(&:total).inject(0, &:+)), :status => 'Iniciada')
   end
 
   def alive?
