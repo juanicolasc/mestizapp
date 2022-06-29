@@ -33,8 +33,12 @@
       </tbody>
 
       <tfoot>
-          <th colspan="5" ></th>
-          <th ></th>
+          <th colspan="5" ><%= @pagy.count %> Pedidos encontrados</th>
+          <th class="text-end"><%= number_to_currency(@total_value_sum,  :precision => 0) %></th>
+          <th class="text-end"><%= number_to_currency(@total_aditions_sum,  :precision => 0) %></th>
+          <th class="text-end"><%= number_to_currency(@total_tip_sum,  :precision => 0) %></th>
+          <th class="text-end"><%= number_to_currency(@total_final_value_sum,  :precision => 0) %></th>
+          <th colspan="2" ></th>
       </tfoot>
     </table>
 </div>
