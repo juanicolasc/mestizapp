@@ -4,7 +4,7 @@
     <div class="row" id="<%= dom_id @order %>">
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :date do %>
-      <% if @order.alive? %>
+      <% if @order.alive? and @order.active %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-calendar3"), edit_order_path(@order) %></h2>
       <% else %>
         <h2><%= content_tag(:i, " ", :class => "bi bi-calendar3 text-secondary") %></h2>
@@ -15,7 +15,7 @@
       </div>
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :guests do %>
-      <% if @order.alive? %>
+      <% if @order.alive? and @order.active  %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-people-fill"), edit_order_path(@order) %></h2>
       <% else %>
         <h2><%= content_tag(:i, " ", :class => "bi bi-people-fill text-secondary") %></h2>
@@ -26,7 +26,7 @@
       </div>
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :customer_id do %>
-      <% unless @order.closed? %>
+      <% unless @order.closed? or !@order.active %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-person-square"), edit_order_path(@order) %></h2>
       <% else %>
         <h2><%= content_tag(:i, " ", :class => "bi bi-person-square text-secondary") %></h2>
@@ -37,7 +37,7 @@
       </div>
       <div class="col text-center">
       <%= render "inline_edit", model: @order, attribute: :table_id do %>
-      <% if @order.alive? %>
+      <% if @order.alive? and @order.active %>
         <h2><%= link_to content_tag(:i, " ", :class => "bi bi-ui-checks-grid"), edit_order_path(@order) %></h2>
       <% else %>
         <h2><%= content_tag(:i, " ", :class => "bi bi-ui-checks-grid text-secondary") %></h2>
@@ -57,7 +57,7 @@
       <div class="col-2 overflow-hidden">Precio U.</div>
       <div class="col text-center">Total</div>
       <div class="col text-end">
-      <% if @order.alive? %>
+      <% if @order.alive? and @order.active %>
         <%= link_to content_tag(:i, " ", :class => "bi bi-plus-circle d-block d-sm-none")+content_tag(:span, "Agregar", :class => "d-none d-sm-block"), new_order_item_path(@order), data: { turbo_frame: dom_id(Item.new) }, class: "btn btn-primary" %>
       <% end %>
       </div>
@@ -79,7 +79,7 @@
       <%= render "inline_edit", model: @order, attribute: :aditions do %>
        <div class="row">
         <span class="col-5 text-end h5 text-dark">
-          <% unless @order.closed? %>
+        <% unless @order.closed? or !@order.active %>
             <%= link_to "Adicionales:", edit_order_path(@order) %>
           <% else %>
             <%= content_tag "span", "Adicionales:" %>
@@ -97,7 +97,7 @@
       <%= render "inline_edit", model: @order, attribute: :tip do %>
        <div class="row">
         <span class="col-5 text-end h5 text-dark">
-          <% unless @order.closed? %>
+        <% unless @order.closed? or !@order.active %>
             <%= link_to "Propina:", edit_order_path(@order) %>
           <% else %>
             <%= content_tag "span", "Propina:" %>
@@ -116,7 +116,7 @@
  <div class="col">
   <div class="row">
       <%= render "inline_edit", model: @order, attribute: :observations do %>
-          <% unless @order.closed? %>
+          <% unless @order.closed? or !@order.active %>
             <strong><%= link_to "Observaciones:", edit_order_path(@order) %></strong>
           <% else %>
             <strong><%= content_tag "span", "Observaciones:" %></strong>
@@ -137,6 +137,7 @@
         <%= @order.user %>
     </div>
     <div class="col">
+      <% if @order.active %>
         <% if @order.closed?  %>
           <%= content_tag(:h6, "Medio de Pago: #{@order.payment_method}", id: "payment-label") %>
         <% elsif @order.alive? %>
@@ -158,6 +159,7 @@
             </div>
           <% end %>
         <% end %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -168,7 +170,7 @@
   <%= link_to content_tag(:i, " ", :class => "bi bi-backspace")+" Volver", orders_path, :class => "btn btn-warning", data: { :action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "top"  }, :title => "Volver al listado de Ordenes" %>
     </div>
     <div class="col-7 col-sm-4 ">
-        <% if current_user.admin? %>
+        <% if current_user.admin? and @order.active %>
   <%= button_to(content_tag(:i, " ", :class => "bi bi-trash")+" Anular esta Orden", @order, {method: :delete, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Volver al listado de Ordenes", class: "btn btn-danger"}) %>
         <% end %>
     </div>

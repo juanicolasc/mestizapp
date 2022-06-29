@@ -5,7 +5,7 @@
   <div class="col-2 order-md-3"><%= number_to_currency item.price_unit,  :precision => 0 %></div>
   <div class="col order-md-4 text-end"><strong><%= number_to_currency item.total,  :precision => 0 %></strong></div>
   <div class="col text-end order-md-5">
-      <% if item.order.status == 'Iniciada' or item.order.status == 'Sirviendo' %>
+      <% if item.order.alive? and item.order.active %>
       <span >
       <%= link_to content_tag(:i, " ", :class => "bi bi-pencil "), edit_order_item_path(item.order,item), :class => "btn btn-warning d-inline-block", :title => "Modificar", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %>
       <%= link_to content_tag(:i, " ", :class => "bi bi-trash"), order_item_path(item.order,item), :class =>   "btn btn-danger  d-inline-block", data: { 'turbo-method' => :delete, :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, :title => "Anular" %>

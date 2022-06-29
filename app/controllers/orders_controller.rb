@@ -60,11 +60,14 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1 or /orders/1.json
   def destroy
-    @order.update(:active => false)
-
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Se anuló la orden." }
-      format.json { head :no_content }
+        if @order.update(:active => false)
+            format.html { redirect_to orders_url, notice: "La orden fue anulada exitosamente " }
+            format.json { render :show, status: :created, location: @order }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @order.errors, status: :unprocessable_entity }
+          end
     end
   end
 
