@@ -1,0 +1,8 @@
+<% @customers.each do |customer| %>
+<li role="option" data-autocomplete-value="<%= customer.id %>" >
+    <a role="button" class="dropdown-item d-flex align-items-center gap-2 py-2">
+        <span class="d-inline-block bg-success rounded-circle p-1"></span>
+        <%= customer %>
+    </a>
+</li>
+<% end %>

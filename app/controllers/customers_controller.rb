@@ -9,10 +9,17 @@ class CustomersController < ApplicationController
 
   # GET /customers or /customers.json
   def index
-      parameters = params[:q]
-      @q = Customer.ransack(parameters)
-      total_list = @q.result
+      parameters ||= params[:q]
+      if parameters and (parameters.is_a? String)
+        parameters = {:name_or_identification_or_email_cont=>params[:q]}
+        auto_complete = true
+      end
+      @query = Customer.ransack(parameters)
+      total_list = @query.result
       @pagy, @customers = pagy(total_list, items: 15)
+      if auto_complete
+          render partial: 'searching', formats: :html
+      end
   end
 
   # GET /customers/1 or /customers/1.json
