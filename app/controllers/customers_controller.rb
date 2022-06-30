@@ -52,14 +52,13 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1 or /customers/1.json
   def update
-    respond_to do |format|
-      if @customer.update(customer_params)
-        format.html { redirect_to customer_url(@customer), notice: "Customer was successfully updated." }
-        format.json { render :show, status: :ok, location: @customer }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+    if @customer.update(customer_params)
+      respond_to do |format|
+          format.html { redirect_to customer_url(@customer), notice: "Ciente actualizado." }
+          format.turbo_stream { flash.now[:notice] = "Item actualizado." }
       end
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

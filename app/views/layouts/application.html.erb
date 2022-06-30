@@ -59,6 +59,7 @@
           <div id="main" class="container-lg">
                 <%= yield %>
           </div>
+          <%= turbo_frame_tag "remote_modal" %>
       </main>
       <footer class="footer mt-auto py-3 bg-light">
           <div class="container">

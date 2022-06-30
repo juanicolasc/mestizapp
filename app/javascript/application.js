@@ -2,6 +2,8 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
+window.bootstrap = bootstrap
+
 //inicializar pop overs
 let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
 let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {

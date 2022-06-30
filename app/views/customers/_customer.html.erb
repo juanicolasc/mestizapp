@@ -2,5 +2,11 @@
   <th scope="row"><%= customer.name %></th>
   <td><%= customer.identification %></td>
   <td><%= customer.email %></td>
-  <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), customer, :class => "btn btn-success", :title => "Ver en Detalle", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %></td>
+  <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), customer, :class => "btn btn-success", :title => "Ver en Detalle", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %>
+
+    <%= link_to content_tag(:i, " ", :class => "bi bi-pencil"), edit_customer_path(customer), :class => "btn btn-warning ", :title => "Modificar", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom", 'data-controller' => "turbo" %>
+
+    <%= link_to content_tag(:i, " ", :class => "bi bi-trash-fill"), customer_path(customer), :class => "btn btn-danger", data: { 'turbo-method' => :delete, :turbo_confirm => "¿Estas seguro?", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, :title => "Anular" %>
+
+  </td>
 </tr>
