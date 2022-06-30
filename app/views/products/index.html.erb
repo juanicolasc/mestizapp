@@ -1,10 +1,12 @@
+<h2 >Productos</h2>
 <nav class="navbar bg-light">
   <div class="container-fluid">
-    <h2 class="navbar-brand" >Productos</h2>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="buscar..." aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Buscar</button>
-    </form>
+    <%= search_form_for(@q, url: products_path, method: :get, class: 'd-flex') do |f| %>
+        <%= f.search_field :name_or_description_cont, placeholder: "nombre o descripción...", class: 'form-control ' %>
+        <%= button_tag :submit, class: 'btn btn-primary' do %>
+           <%= content_tag(:i, " ", :class => "bi bi-search") %>
+        <% end %>
+    <% end %>
     <div class="text-end">
       <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Producto", new_product_path, :class => "btn btn-primary" %>
     </div>
