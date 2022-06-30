@@ -1,14 +1,33 @@
-<p style="color: green"><%= notice %></p>
+<h1>Clientes</h1>
+<nav class="navbar bg-light">
+  <div class="container-fluid">
+    <%= search_form_for(@q, url: customers_path, method: :get, class: 'd-flex') do |f| %>
+        <%= f.search_field :name_or_identification_or_email_cont, placeholder: "buscar...", class: 'form-control ' %>
+        <%= button_tag :submit, class: 'btn btn-primary' do %>
+           <%= content_tag(:i, " ", :class => "bi bi-search") %>
+        <% end %>
+    <% end %>
+    <div class="text-end">
+      <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Cliente", new_customer_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+</nav>
 
-<h1>Customers</h1>
-
-<div id="customers">
+<table id="customers" class="table table-responsive table-sm table-stripped">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Identificación</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+  <tbody  id="products">
   <% @customers.each do |customer| %>
     <%= render customer %>
-    <p>
-      <%= link_to "Show this customer", customer %>
-    </p>
   <% end %>
+  </tbody>
+</table>
+<div id="pager" class="min-w-full my-8 flex justify-between">
+    <%== pagy_bootstrap_nav(@pagy) %>
 </div>
 
-<%= link_to "New customer", new_customer_path %>

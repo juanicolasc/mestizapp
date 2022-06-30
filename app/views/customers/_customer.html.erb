@@ -1,17 +1,6 @@
-<div id="<%= dom_id customer %>">
-  <p>
-    <strong>Name:</strong>
-    <%= customer.name %>
-  </p>
-
-  <p>
-    <strong>Identification:</strong>
-    <%= customer.identification %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= customer.email %>
-  </p>
-
-</div>
+<tr id="<%= dom_id customer %>">
+  <th scope="row"><%= customer.name %></th>
+  <td><%= customer.identification %></td>
+  <td><%= customer.email %></td>
+  <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), customer, :class => "btn btn-success", :title => "Ver en Detalle", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %></td>
+</tr>

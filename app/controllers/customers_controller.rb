@@ -9,7 +9,10 @@ class CustomersController < ApplicationController
 
   # GET /customers or /customers.json
   def index
-    @customers = Customer.all
+      parameters = params[:q]
+      @q = Customer.ransack(parameters)
+      total_list = @q.result
+      @pagy, @customers = pagy(total_list, items: 15)
   end
 
   # GET /customers/1 or /customers/1.json
