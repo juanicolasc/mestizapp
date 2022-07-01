@@ -1,0 +1,31 @@
+<%= turbo_stream.replace "remote_modal" do %>
+    <%= turbo_frame_tag :remote_modal, target: :_top do %>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-controller="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> <%= @customer.name %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col fw-bold text-end">Identificación</div>
+                  <div class="col"><%= @customer.identification %></div>
+                </div>
+                <div class="row">
+                  <div class="col fw-bold text-end">Correo Electrónico</div>
+                  <div class="col"><%= @customer.email %></div>
+                </div>
+                <div class="row">
+                  <div class="col fw-bold text-end">Creado desde</div>
+                  <div class="col"><%= @customer.created_at.to_formatted_s(:short) %></div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+<% end %>

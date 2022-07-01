@@ -8,11 +8,11 @@
         <% end %>
     <% end %>
     <div class="text-end">
-      <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Cliente", new_customer_path, :class => "btn btn-primary" %>
+      <%= link_to content_tag(:i, " ", :class => "bi bi-stars text-warning")+"Nuevo Cliente", new_customer_path, :class => "btn btn-primary", 'data-controller' => "turbo"  %>
     </div>
   </div>
 </nav>
-<table id="customers" class="table table-responsive table-sm table-stripped">
+<table class="table table-responsive table-sm table-striped">
   <thead>
     <tr>
       <th scope="col">Nombre</th>
@@ -21,7 +21,7 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody  id="products">
+  <tbody id="customers">
   <% @customers.each do |customer| %>
     <%= render customer %>
   <% end %>

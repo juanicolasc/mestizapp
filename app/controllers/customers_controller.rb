@@ -38,15 +38,13 @@ class CustomersController < ApplicationController
   # POST /customers or /customers.json
   def create
     @customer = Customer.new(customer_params)
-
-    respond_to do |format|
-      if @customer.save
-        format.html { redirect_to customer_url(@customer), notice: "Customer was successfully created." }
-        format.json { render :show, status: :created, location: @customer }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+    if @customer.save
+      respond_to do |format|
+        format.html { redirect_to customer_url(@customer), notice: "Ciente creado satisfactoriamente." }
+        format.turbo_stream {  flash.now[:notice] = "Ciente creado satisfactoriamente.."}
       end
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -55,7 +53,7 @@ class CustomersController < ApplicationController
     if @customer.update(customer_params)
       respond_to do |format|
           format.html { redirect_to customer_url(@customer), notice: "Ciente actualizado." }
-          format.turbo_stream { flash.now[:notice] = "Item actualizado." }
+          format.turbo_stream { flash.now[:notice] = "Ciente actualizado." }
       end
     else
       render :edit, status: :unprocessable_entity
