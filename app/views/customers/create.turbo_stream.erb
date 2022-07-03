@@ -1,2 +1,5 @@
 <%= turbo_stream.append "customers", @customer %>
 <%= turbo_stream.update "remote_modal", "" %>
+<%= turbo_stream.replace "order_customer_id" do %>
+    <input data-autocomplete-target="hidden" autocomplete="off" type="hidden" name="order[customer_id]" id="order_customer_id" value="<%=  @customer.id %>" data-controller="customer" data-customer-name-value="<%= @customer %>">
+<% end %>

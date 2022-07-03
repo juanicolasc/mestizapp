@@ -31,6 +31,7 @@
       </div>
       <div class="col-sm-12 col-md-6">
         <label class="col-sm-2 col-form-label" for="cliente">Cliente</label>
+      <%= link_to "(agrega uno nuevo)", new_customer_path, :class => "btn btn-link", 'data-controller' => "turbo"  %>
         <div data-controller="autocomplete" data-autocomplete-url-value="/customers"  class="col-sm-10">
           <input id="cliente" type="text" data-autocomplete-target="input" class="form-control form-control-lg" placeholder="Digita para buscar..."/>
           <ul class="list-unstyled mb-0"  data-autocomplete-target="results"></ul>
