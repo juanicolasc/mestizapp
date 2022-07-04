@@ -1,0 +1,8 @@
+<% @products.each do |product| %>
+<li role="option" data-autocomplete-value="<%= product.id %>" >
+    <a role="button" class="dropdown-item d-flex align-items-center gap-2 py-2">
+        <span class="d-inline-block bg-danger rounded-circle p-1"></span>
+        <%= product.name %>
+    </a>
+</li>
+<% end %>

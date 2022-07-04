@@ -9,10 +9,17 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-      parameters = params[:q]
+      parameters ||= params[:q]
+      if parameters and (parameters.is_a? String)
+        parameters = {:name_or_description_cont=>params[:q]}
+        auto_complete = true
+      end
       @q = Product.ransack(parameters)
       @q.active_eq = true
       @products = @q.result
+      if auto_complete
+          render partial: 'searching', formats: :html
+      end
   end
 
   # GET /products/1 or /products/1.json

@@ -2,15 +2,19 @@
         <div class="row g-3">
           <div class="col-md-6">
             <%= form.label :product_id %>
-            <%= form.select :product_id, options_from_collection_for_select(Product.where(:active => true), :id, :name, item.product_id), {}, {class: "form-select"} %>
+            <div data-controller="autocomplete" data-autocomplete-url-value="/products"  class="position-relative">
+              <input id="producto" type="text" data-autocomplete-target="input" class="form-control" placeholder="Buscar..." value="<%= item.product.name if item.product %>"/>
+              <%= form.hidden_field :product_id, "data" => { "autocomplete-target" => "hidden"} %>
+              <ul class="list-unstyled mb-0 position-absolute top-100 start-0 bg-white border"  data-autocomplete-target="results"></ul>
+            </div>
           </div>
           <div class="col-md-6">
             <%= form.label :quantity, 'Cantidad' %>
-            <%= form.number_field :quantity, class: "form-control form-control" %>
+            <%= form.number_field :quantity, class: "form-control" %>
           </div>
           <div class="col-md-6">
             <%= form.label :observations %>
-            <%= form.text_field :observations, class: "form-control form-control" %>
+            <%= form.text_field :observations, class: "form-control" %>
           </div>
           <div class="col-md-6">
             <%= form.submit "Guardar", :class => "btn btn-primary mt-4" %>
