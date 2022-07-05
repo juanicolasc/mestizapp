@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   belongs_to :table
   has_many :items
 
-  validates_presence_of :table
+  validates :table, presence: true, if: :alive?
   validates_presence_of :date
   validates :guests, numericality: { only_integer: true, greater_than_or_equal_to: 1  }
 
@@ -20,7 +20,7 @@ class Order < ApplicationRecord
   end
 
   def alive?
-      (self.status == 'Iniciada' or self.status == 'Sirviendo')
+      ((self.status == 'Iniciada' or self.status == 'Sirviendo') and active = true)
   end
 
   def closed?
@@ -38,5 +38,14 @@ class Order < ApplicationRecord
 
   before_save do
       self.final_value = (self.total_value + self.aditions + self.tax + self.tip)
+  end
+
+
+  after_save do
+    if self.alive?
+      self.table.occupy
+    else
+      self.table.liberate
+    end
   end
 end

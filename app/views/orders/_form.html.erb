@@ -31,7 +31,7 @@
       <h2><%= link_to content_tag(:i, " ", :class => "bi bi-ui-checks-grid"), @order, class: "text-danger" %></h2>
       <h3 class="lead">Mesa</h3>
       <div class="input-group">
-        <%= form.select :table_id, options_from_collection_for_select(Table.all, :id, :name, @order.table_id) , {},{"class" => "form-select form-select-sm"} %>
+        <%= form.select :table_id, options_from_collection_for_select((Table.ransack(status_eq: 'Disponible').result+[@order.table]), :id, :name, @order.table_id) , {},{"class" => "form-select form-select-sm"} %>
         <%= form.button content_tag(:i, " ", :class => "bi bi-save"), class: "btn btn-success btn-sm" %>
       </div>
 <% end %>
