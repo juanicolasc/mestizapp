@@ -3,5 +3,7 @@
   <td><%= product.description %></td>
   <td><%= product.stock %></td>
   <td><%= number_to_currency product.price,  :precision => 0 %></td>
+  <td><%= product.kitchen.name %></td>
+  <td><%= product.type.name %></td>
   <td><%= link_to content_tag(:i, " ", :class => "bi bi-zoom-in"), product, :class => "btn btn-success", :title => "Ver en Detalle", 'data-bs-toggle' => "tooltip", 'data-bs-placement' => "bottom" %></td>
 </tr>

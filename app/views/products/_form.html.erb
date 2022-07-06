@@ -32,6 +32,20 @@
   </div>
 
   <div>
+    <%= form.label :kitchen_id, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+        <%= form.select :kitchen_id, options_from_collection_for_select(Kitchen.all.order(:name), :id, :name, product.kitchen_id), class: "form-control form-control-lg" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :type_id, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+        <%= form.select :type_id, options_from_collection_for_select(Type.all.order(:name), :id, :name, product.type_id), class: "form-control form-control-lg" %>
+    </div>
+  </div>
+
+  <div>
     <%= form.submit "Guardar", :class => "btn btn-primary" %>
   </div>
 <% end %>

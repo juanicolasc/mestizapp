@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :kitchens
+  resources :types
   get 'history', to: 'history#index'
   root "sessions#new"
   resources :orders do

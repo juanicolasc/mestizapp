@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_05_033650) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_06_025248) do
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "identification"
@@ -31,6 +31,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_033650) do
     t.string "status", default: "Solicitado"
     t.index ["order_id"], name: "index_items_on_order_id"
     t.index ["product_id"], name: "index_items_on_product_id"
+  end
+
+  create_table "kitchens", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orders", force: :cascade do |t|
@@ -63,6 +69,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_033650) do
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "type_id", default: 1, null: false
+    t.integer "kitchen_id", default: 1, null: false
+    t.index ["kitchen_id"], name: "index_products_on_kitchen_id"
+    t.index ["type_id"], name: "index_products_on_type_id"
   end
 
   create_table "tables", force: :cascade do |t|
@@ -71,6 +81,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_033650) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "Disponible"
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -87,4 +103,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_033650) do
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "tables"
   add_foreign_key "orders", "users"
+  add_foreign_key "products", "kitchens"
+  add_foreign_key "products", "types"
 end
