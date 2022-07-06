@@ -12,30 +12,42 @@ class Item < ApplicationRecord
   VALID_STATUSES = ['Solicitado', 'Confirmado', 'Cocinando', 'Listo']
   validates :status, inclusion: { in: VALID_STATUSES }
 
-  #debería agregar quien fue el mesero que agrgó el item
+  #pasa el item  al estado confirmado para que pueda ser tomado por la cocina correspondiente, no debe hacer cambios sobre items que ya han sido previamente confirmados
+  def confirm
+      if self.status == 'Solicitado'
+          self.update(:status => 'Confirmado')
+      end
+  end
+
+  #actualizar siempre el precio total
   before_save do
       self.price_unit = self.product.price
       self.total = self.price_unit * self.quantity
   end
 
+  #cada item siempre arranca con el status incial
   after_initialize do
       self.status ||= 'Solicitado'
   end
 
+  #cuando se elimine un item debe decrementar el precio de la orden y devolver el stock, en una orden en estado de cuenta o pagado no se debería poder eliminar un item
   after_destroy do
       self.order.total_value -= self.total
       self.order.save
       self.product.increment_stock(self.quantity.to_i)
   end
 
+  #siempre se debe actualizar el total de la orden cuando se guarda o se actualiza un item
   after_save do
       self.order.update_total
   end
 
+  #una vez se ha creado el item se debe decrementar el stock del producto capturado
   after_create do
       self.product.decrement_stock(self.quantity)
   end
 
+  #cuando se actualice se debe decrementar o incrementar el stock del producto, según corresponda
   before_update do
     if self.product and (self.quantity_changed?)
         era = self.quantity_was.to_i
