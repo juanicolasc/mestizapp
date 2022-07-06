@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :services, only: [:index, :edit, :update]
+  get 'services', to: 'services#index'
   resources :kitchens
   resources :types
   get 'history', to: 'history#index'

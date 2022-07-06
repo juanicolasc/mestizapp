@@ -36,6 +36,18 @@
                     <li class="nav-item text-center">
                       <%= link_to content_tag(:i, "", :class => "bi bi-people")+" Usuarios", users_path, :class => 'nav-link'  %>
                     </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <%= content_tag(:i, "", :class => "bi bi-cup-straw")+" Cocina" %>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <% Kitchen.all.order(:name).each do |k| %>
+                          <li>
+                            <%= link_to k.name, services_path("q[product_kitchen_id_eq]" => k.id), :class => 'dropdown-item'  %>
+                          </li>
+                      <% end %>
+                      </ul>
+                    </li>
                   </ul>
                   <div class="d-flex">
                     <% if current_user %>

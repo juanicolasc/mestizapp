@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   validate :enough_new_stock, on: :update
 
 
-  VALID_STATUSES = ['Solicitado', 'Confirmado', 'Cocinando', 'Listo']
+  VALID_STATUSES = ['Solicitado', 'Confirmado', 'Preparación', 'Listo']
   validates :status, inclusion: { in: VALID_STATUSES }
 
   #pasa el item  al estado confirmado para que pueda ser tomado por la cocina correspondiente, no debe hacer cambios sobre items que ya han sido previamente confirmados

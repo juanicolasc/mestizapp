@@ -1,0 +1,29 @@
+<h2 >Pedidos Activos</h2>
+<nav class="navbar bg-light">
+    <%= search_form_for(@q, url: services_path, method: :get, class: 'row gy-2 gx-3 align-items-center d-flex') do |f| %>
+
+     <div class="col-auto">
+        <%= f.search_field :product_name_or_product_description_cont, placeholder: "nombre o descripción...", class: 'form-control ' %>
+     </div>
+     <div class="col-auto">
+        <%= f.select :status_eq, options_for_select(['Preparación', 'Confirmado'], @q.status_eq),{include_blank: "Todos los estados.."}, {class: "form-select"} %>
+     </div>
+     <div class="col-auto">
+        <%= f.select :product_kitchen_id_eq, Kitchen.all.order(:name).collect {|p| [ p.name, p.id ] },{:include_blank => "Todas las Cocinas", :selected => @q.product_kitchen_id_eq }, {class: "form-select"} %>
+     </div>
+     <div class="col-auto">
+        <%= button_tag :submit, class: 'btn btn-primary' do %>
+           <%= content_tag(:i, " ", :class => "bi bi-search") %>
+        <% end %>
+     </div>
+    <% end %>
+    <div class="text-end">
+    </div>
+</nav>
+<div class="container-fluid overflow-auto">
+    <div class="row flex-row flex-nowrap">
+      <% @items.each do |i| %>
+        <%= render 'services/table', item: i %>
+      <% end %>
+    </div>
+</div>
