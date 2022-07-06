@@ -45,15 +45,17 @@ class Order < ApplicationRecord
       self.final_value = (self.total_value + self.aditions + self.tax + self.tip)
   end
 
-  #cada vez que se guarda se debe verificar el estado para liberar o ocupar la mesa, además debe alistar los items para que se tengan en cuenta en la cocina.
+  #cada vez que se guarda se debe verificar el estado para liberar o ocupar la mesa, además debe alistar los items para que se tengan en cuenta en la cocina, si y sólo si quedó confirmada.
   after_save do
     if self.alive?
       self.table.occupy
     else
       self.table.liberate
     end
-    self.items.each do |item|
-      item.confirm
+    if self.status == 'Sirviendo'
+      self.items.each do |item|
+          item.confirm
+      end
     end
   end
 
