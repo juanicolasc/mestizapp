@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_04_232847) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_05_033650) do
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "identification"
@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_04_232847) do
     t.integer "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "Solicitado"
     t.index ["order_id"], name: "index_items_on_order_id"
     t.index ["product_id"], name: "index_items_on_product_id"
   end

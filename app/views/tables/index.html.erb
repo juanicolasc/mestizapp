@@ -7,6 +7,7 @@
     <%= render table %>
     <p>
       <%= link_to "Show this table", table %>
+      <%= button_to(content_tag(:i, " ", :class => "bi bi-receipt")+" Liberar mesa", table_path(table.id), {method: :put, data: {:action => "click->orders#confirm", 'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "liberar Mesa", class: "btn btn-info", params: { "table[status]" => 'Disponible'}}) %>
     </p>
   <% end %>
 </div>

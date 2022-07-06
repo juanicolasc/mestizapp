@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
   # DELETE /orders/1 or /orders/1.json
   def destroy
     respond_to do |format|
-        if @order.update_column(:active, false)
+        if @order.destroy
             format.html { redirect_to orders_url, notice: "La orden fue anulada exitosamente " }
             format.json { render :show, status: :created, location: @order }
           else

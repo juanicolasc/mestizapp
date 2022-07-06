@@ -14,17 +14,18 @@ class Order < ApplicationRecord
 
   validates :status, inclusion: { in: VALID_STATUSES }
 
-  #metodo para actualiza
-  def update_total
-      self.update(:total_value => (self.items.map(&:total).inject(0, &:+)), :status => 'Iniciada')
-  end
 
   def alive?
-      ((self.status == 'Iniciada' or self.status == 'Sirviendo') and active = true)
+      ((self.status == 'Iniciada' or self.status == 'Sirviendo') and  self.active == true)
   end
 
   def closed?
       (self.status == 'Pagada')
+  end
+
+  #metodo para actualiza
+  def update_total
+      self.update({:total_value => (self.items.map(&:total).inject(0, &:+)), :status => 'Iniciada'})
   end
 
   after_initialize do
@@ -46,6 +47,16 @@ class Order < ApplicationRecord
       self.table.occupy
     else
       self.table.liberate
+    end
+  end
+
+  def destroy
+    update_attribute(:active, false)
+    self.table.liberate
+    if (self.status == 'Iniciada' or self.status == 'Sirviendo')
+        self.items.each do |book|
+          book.destroy
+        end
     end
   end
 end

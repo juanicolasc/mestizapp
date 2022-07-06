@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   ADMIN = 1
   WAITER = 2
+  CHEF = 3
+  CASHIER = 4
 
   has_many :orders
   attr_accessor :password
