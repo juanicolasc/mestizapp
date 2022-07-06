@@ -20,10 +20,12 @@
     <div class="text-end">
     </div>
 </nav>
+
 <div class="container-fluid overflow-auto">
+    <% clase = ['bg-warning','bg-primary','bg-secondary','bg-success','bg-danger','bg-info'] %>
     <div class="row flex-row flex-nowrap">
-      <% @items.each do |i| %>
-        <%= render 'services/table', item: i %>
+      <% @items.each do |item| %>
+        <%= render 'services/item', item: item, clase: clase[item.order_id%6] %>
       <% end %>
     </div>
 </div>

@@ -5,7 +5,10 @@ class ServicesController < ApplicationController
       @q.order_active = true
       @q.order_status_in = ['Iniciada', 'Sirviendo']
       @q.status_in = ['Confirmado', 'Preparación'] if @q.status_eq.nil?
+      @q.sorts = ['created_at asc', 'updated_at asc']
       @items = @q.result
+      @orders = @items.map(&:order).uniq
+
   end
 
   def edit

@@ -1,0 +1,20 @@
+<div class="col-3">
+ <div class="card text-center text-bg-primary">
+  <div class="card-header bg-gradient <%= clase %>">
+    <%= item.status %>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"><%= item.product.name%></h5>
+    <h6 class="card-text">Mesa:<%= item.order.table.name %></h6>
+    <p class="card-text"><small><%= item.order.observations %></small></p>
+
+  </div>
+  <ol class="list-group list-group-flush text-start">
+    <li class="list-group-item"><strong>Cantidad: </strong><%= item.quantity %></li>
+      <li class="list-group-item  bg-light text-dark">&nbsp;<%= item.observations %></li>
+  </ol>
+  <div class="card-footer text-muted">
+    <a href="#" class="btn btn-primary">Todos en preparación</a>
+  </div>
+ </div>
+</div>
