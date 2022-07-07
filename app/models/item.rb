@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   validate :enough_new_stock, on: :update
 
 
-  VALID_STATUSES = ['Solicitado', 'Confirmado', 'Preparación', 'Listo']
+  VALID_STATUSES = ['Solicitado', 'Confirmado', 'Preparación', 'Finalizado']
   validates :status, inclusion: { in: VALID_STATUSES }
 
   #pasa el item  al estado confirmado para que pueda ser tomado por la cocina correspondiente, no debe hacer cambios sobre items que ya han sido previamente confirmados
@@ -17,6 +17,21 @@ class Item < ApplicationRecord
       if self.status == 'Solicitado'
           self.update(:status => 'Confirmado')
       end
+  end
+
+  #retorna cual es el siguiente estado del item
+  def next_status
+      status = 'Solicitado'
+      if self.status == 'Solicitado'
+        status = 'Confirmado'
+      elsif self.status == 'Confirmado'
+        status = 'Preparación'
+      elsif self.status == 'Preparación'
+        status = 'Finalizado'
+      else
+        status = 'Finalizado'
+      end
+      status
   end
 
   #actualizar siempre el precio total

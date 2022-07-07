@@ -1,0 +1,4 @@
+<%= turbo_stream.replace @item, (@item.status != 'Finalizado' ? (button_to(content_tag(:i, " ", :class => "bi bi-check-circle")+@item.next_status, service_path(@item), {method: :put, data: {'bs-toggle' => "tooltip", 'bs-placement' => "bottom"  }, title: "Iniciar Preparación", class: "btn btn-primary", params: { "item[status]" => @item.next_status}})) : '')  %>
+<%= turbo_stream.update "#{ dom_id(@item) }_title" do %>
+<strong><%= @item.status %></strong>
+<% end %>

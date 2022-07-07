@@ -1,7 +1,7 @@
 <div class="col-3">
  <div class="card text-center text-bg-primary">
-  <div class="card-header bg-gradient <%= clase %>">
-    <%= item.status %>
+  <div class="card-header bg-gradient <%= clase %>" id="<%= dom_id(item) %>_title">
+    <strong><%= item.status %></strong>
   </div>
   <div class="card-body">
     <h5 class="card-title"><%= item.product.name%></h5>
@@ -14,7 +14,10 @@
       <li class="list-group-item  bg-light text-dark">&nbsp;<%= item.observations %></li>
   </ol>
   <div class="card-footer text-muted">
-    <a href="#" class="btn btn-primary">Todos en preparación</a>
+    <label>Cambiar a: </label>
+    <%= turbo_frame_tag dom_id(item) do %>
+        <%= button_to(content_tag(:i, " ", :class => "bi bi-check-circle")+item.next_status, service_path(item), {method: :put, class: "btn btn-primary", params: { "item[status]" => item.next_status}}) %>
+    <% end %>
   </div>
  </div>
 </div>
